@@ -44,7 +44,7 @@ public class LoginControllerMB implements Serializable {
      */
     public LoginControllerMB() {
         httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
+//        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario");
         usuario = new SrnTblUsuario();
     }
 
@@ -85,7 +85,7 @@ public class LoginControllerMB implements Serializable {
 
         } catch (ViewExpiredException e) {
             FacesUtils.controlLog("INFO", e.getMessage());
-            UtilidadesSeguridad.getControlSession();
+            UtilidadesSeguridad.getControlSession("endsession.jsp");
         } catch (Exception ex) {
             System.out.println("Error en la clase LoginControllerMB del metodo loginControl: " + ex.getMessage());
             FacesUtils.controlLog("SEVERE", "Error en la clase LoginControllerMB del metodo: " + ex.getMessage());
@@ -97,7 +97,9 @@ public class LoginControllerMB implements Serializable {
      *
      */
     public void controlSession() {
-        UtilidadesSeguridad.getControlSession();
+        if (FacesUtils.getSession().getAttribute("usuario") == null) {
+            UtilidadesSeguridad.getControlSession("endsession.jsp");
+        }
     }
 
     /**

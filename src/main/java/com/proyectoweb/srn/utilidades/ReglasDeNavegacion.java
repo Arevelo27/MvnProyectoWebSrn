@@ -24,18 +24,27 @@ public class ReglasDeNavegacion implements Serializable {
 
     public ReglasDeNavegacion() {
         try {
-            usuarioTo = (UsuarioTO) FacesUtils.getSession().getAttribute("usuario");
-            if (usuarioTo == null) {
+            if (FacesUtils.getSession().getAttribute("usuario") == null) {
                 System.out.println("No hay registro de usuario");
-                UtilidadesSeguridad.getControlSession();
+                UtilidadesSeguridad.getControlSession("endsession.jsp");
             } else {
+                usuarioTo = (UsuarioTO) FacesUtils.getSession().getAttribute("usuario");
                 nombre = usuarioTo.getNombre() + " " + usuarioTo.getApellidos();
             }
+        } catch (IllegalStateException ie) {
+            FacesUtils.controlLog("SEVERE", "Error [IllegalStateException] en la clase ReglasDeNavegacion: " + ie.getMessage());
+            UtilidadesSeguridad.getControlSession("endsession.jsp");
         } catch (ViewExpiredException e) {
             FacesUtils.controlLog("SEVERE", "Error [ViewExpiredException] en la clase ReglasDeNavegacion: " + e.getMessage());
-            UtilidadesSeguridad.getControlSession();
+            UtilidadesSeguridad.getControlSession("endsession.jsp");
         } catch (Exception ex) {
             FacesUtils.controlLog("SEVERE", "Error [Exception] en la clase ReglasDeNavegacion: " + ex.getMessage());
+        }
+    }
+    
+    public void controlSession() {
+        if (FacesUtils.getSession().getAttribute("usuario") == null) {
+            UtilidadesSeguridad.getControlSession("endsession.jsp");
         }
     }
 //    public static String usuario = "inicio.xhtml?faces-redirect=true";

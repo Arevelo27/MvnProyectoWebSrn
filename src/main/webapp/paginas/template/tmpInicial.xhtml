@@ -17,11 +17,14 @@
                 <f:loadBundle basename="com.proyectoweb.srn.utilidades.messages" var="msg"/>
             </f:facet>        
             <link rel="shortcut icon" href="../resources/imagenes/favicon.ico"></link>
+            <f:metadata>
+                <!--<f:event type="preRenderView" listener="#{reglasDeNavegacion.controlSession()}" />-->
+            </f:metadata>
 
         </h:head>
 
         <h:body>
-            
+
             <p:layout fullPage="true">
                 <p:layoutUnit position="north" size="110" resizable="true" closable="true" collapsible="true">
                     <div id="top" class="top">

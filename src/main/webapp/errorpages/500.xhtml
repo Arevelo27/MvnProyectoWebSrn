@@ -21,7 +21,7 @@ and open the template in the editor.
             }
             html {
                 padding: 30px 10px;
-                font-size: 20px;
+                font-size: 14px;
                 line-height: 1.4;
                 color: #737373;
                 background: #f0f0f0;
@@ -43,8 +43,8 @@ and open the template in the editor.
                 background: #fcfcfc;
             }
             h1 {
-                margin: 0 10px;
-                font-size: 50px;
+                margin: 0 8px;
+                font-size: 35px;
                 text-align: center;
             }
             h1 span {
@@ -77,7 +77,7 @@ and open the template in the editor.
             #goog-wm-qt,
             #goog-wm-sb {
                 border: 1px solid #bbb;
-                font-size: 16px;
+                font-size: 14px;
                 line-height: normal;
                 vertical-align: top;
                 color: #444;
@@ -129,19 +129,26 @@ and open the template in the editor.
     </head>
     <body>
         <div class="container">
-            <h1>Not found <span>:(</span></h1>
-            <p>Lo sentimos, pero la página que estaban tratando de ver no existe.</p>
-            <p>Parece que este fue el resultado de cualquiera de los dos:</p>
+            <h1>Error interno del servidor <span>:(</span></h1>
+            <p><h4>informe de excepción</h4></p>
+            <p>Lo sentimos, el servidor encontró un error interno que le ha impedido cumplir con esta petición.</p>
+            <p>Parece que este fue el resultado de la excepción:</p>
             <ul>
-                <li>Una dirección mal escrita</li>
-                <li>Un vínculo o dirección fuera de fecha</li>
+                <li>javax.servlet.ServletException: No se puede crear una sesión después de que la respuesta ha sido confirmada
+                    causa principal
+                </li>
+                <li>java.lang.IllegalStateException:
+                    No se puede crear una sesión después de que la respuesta ha sido confirmada
+                </li>
             </ul>
+            <p>Nota: Las trazas de la pila de excepción y sus causas están 
+               disponibles en el servidor GlassFish, edición de código abierto 4.1 troncos.</p>
             <script>
                 var GOOG_FIXURL_LANG = (navigator.language || '').slice(0, 2), GOOG_FIXURL_SITE = location.host;
             </script>
             <script src="//linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
             <br></br>
-            <!--<center><a href="../index.jsp">Volver a iniciar sessión</a></center>-->
+            <center><a href="../index.jsp">Volver a iniciar sessión</a></center>
         </div>
     </body>
 </html>

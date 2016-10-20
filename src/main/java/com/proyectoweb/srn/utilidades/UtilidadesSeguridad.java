@@ -36,8 +36,9 @@ public class UtilidadesSeguridad {
 
     /**
      *
+     * @param dir
      */
-    public static void getControlSession() {
+    public static void getControlSession(String dir) {
         ExternalContext ctx
                 = FacesContext.getCurrentInstance().getExternalContext();
         String ctxPath
@@ -51,7 +52,7 @@ public class UtilidadesSeguridad {
             // si se usa una HttpServletResponse fallarÃ¡.
             // Sin embargo, como ya estÃ¡ fuera del ciclo de vida
             // de JSF se debe usar la ruta completa -_-U
-            ctx.redirect(ctxPath + "/endsession.jsp");
+            ctx.redirect(ctxPath + "/"+dir);
 //                    this.pasarGarbageCollector();
         } catch (IOException ex) {
             ex.printStackTrace();
