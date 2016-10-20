@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <h:outputStylesheet name="./css/default.css"/>
+            <h:outputStylesheet name="./css/cssLayout.css"/>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>#{msg['nombreApp']}</title>
+                <f:loadBundle basename="com.proyectoweb.srn.utilidades.messages" var="msg"/>
+            </f:facet>        
+            <link rel="shortcut icon" href="../resources/imagenes/favicon.ico"></link>
+
+        </h:head>
+
+        <h:body>
+            
+            <p:layout fullPage="true">
+                <p:layoutUnit position="north" size="110" resizable="true" closable="true" collapsible="true">
+                    <div id="top" class="top">
+                        <ui:insert name="top">
+                            <div align="right"><p:commandButton value="Cerrar Sesiòn" onclick="window.location = '../endsession.jsp'" style="color: black"/></div>
+
+                            <ui:include src="/paginas/template/head.xhtml"/>
+
+                            <div align="right" ><p:outputLabel class="user_text" value="Bienvenido: #{reglasDeNavegacion.nombre}" /></div>
+
+                        </ui:insert>
+                    </div>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="225" header="Menu" collapsible="true" >
+                    <div id="left">
+                        <ui:insert name="left">
+                            <ui:include src="/paginas/template/menuTmp.xhtml"/>
+                        </ui:insert>
+                    </div>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" >
+                    <div id="content" class="left_content">
+                        <ui:insert name="content">Content</ui:insert>
+                    </div>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+    </f:view>
+</html>

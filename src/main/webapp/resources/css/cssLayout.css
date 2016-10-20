@@ -1,0 +1,92 @@
+
+#top {
+    position: relative;
+    background:#BED6F8  repeat-x scroll 0% 0%;
+    /*background:#BED6F8 url("/ProyectoWebSrn/javax.faces.resource/images/header.png.xhtml?ln=bluesky") repeat-x scroll 0% 0%;*/
+    /*background:#BED6F8 url("/ProyectoWebSrn/javax.faces.resource/images/header.png.xhtml?ln=primefaces-bluesky") repeat-x scroll 0% 0%;*/
+    /*background-color: #036fab;*/
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+}
+
+#bottom {
+    position: relative;
+    background-color: #c2dfef;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
+
+#left {
+    float: left;
+    /*background-color: #ece3a5;*/  
+    width: 20em;  
+    /*background-color: rgba(0, 0, 0, 0.05);*/
+    padding: 5px;
+    
+    /*width: 150px;*/
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.left_content {
+    /*background-color: #dddddd;*/    
+    /*background-color: rgba(0, 0, 0, 0.05);*/
+    background-color: #E4EEF2;
+    padding: 15px;
+    margin-left: 3px;
+    /*margin-left: 170px;*/
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+    color: white;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+.ui-panelgrid_base .ui-panelgrid-header_base{
+    text-align:center;padding:4px 10px;
+}
+.ui-panelgrid_base .ui-panelgrid-footer_base{
+    text-align:left;padding:2px 5px;
+}
+.ui-panelgrid_base .ui-panelgrid-cell_base{
+    border-width:0px;border-style:solid;border-color:inherit;padding:3px 10px;
+}
+
+.ui-panelgrid td, .ui-panelgrid tr{
+   border-style: none !important
+}
+
+.user_text {
+    color: black;
+    font-size: 12px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+/*    margin: -4px;
+    text-align: -webkit-right;*/
+}
+
+

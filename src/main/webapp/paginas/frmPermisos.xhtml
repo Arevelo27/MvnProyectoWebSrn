@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:p="http://primefaces.org/ui"
+                 template="./template/tmpInicial.xhtml">
+
+    <ui:define name="content">
+        <!--load resource bundle for this page only--> 
+        <f:loadBundle basename="com.proyectoweb.srn.utilidades.messages" var="msg"/>
+
+        <h2>#{msg['vista.frmPermisos']}</h2>
+        <br></br>
+        <p:panel header="Contenido #1" toggleable="true" >
+            <p:panelGrid columns="2">
+                <p:panel>
+                    <ol>
+                        <li><h:outputLabel value="#{msg.message}" /></li>
+
+                        <li><h:outputText value="#{msg['message.test1']}" /></li>
+
+                        <li><h:outputText value="#{msg['message.test2']}" /></li>
+                        <!--<li><h:outputText value="#{msg['message.test2']}" escape="false" /></li>-->
+
+                        <li><h:outputText value="#{msg['message.test3']}" /></li>
+                        <!--<li><h:outputText value="#{msg['message.test3']}" escape="false" /></li>-->
+                    </ol>
+                </p:panel>
+                <p:panel>
+                    <ol>
+                        <li>
+                            <h:outputFormat value="#{msg['message.param1']}">
+                                <f:param value="param0" />
+                            </h:outputFormat>
+                        </li>
+                        <li>
+                            <h:outputFormat value="#{msg['message.param2']}">
+                                <f:param value="param0" />
+                                <f:param value="param1" />
+                            </h:outputFormat>
+                        </li>
+                    </ol>
+                </p:panel>
+            </p:panelGrid>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

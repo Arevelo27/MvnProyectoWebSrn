@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+    <h:form>
+        <div>
+            <p:panelMenu style="width:300px">
+                <p:submenu label="Administrativo" >
+                    <p:menuitem value="Usuarios"  icon="ui-icon-disk" url="#{reglasDeNavegacion.urlUsuario}.xhtml" immediate="true"/>
+                    <p:menuitem value="Roles"   icon="ui-icon-arrowrefresh-1-w" url="#{reglasDeNavegacion.urlRol}.xhtml" immediate="true"/>
+                    <p:menuitem value="Permisos"   icon="ui-icon-arrowrefresh-1-w" url="#{reglasDeNavegacion.urlPermisos}.xhtml" immediate="true"/>
+                </p:submenu>
+                <p:submenu label="Notificaciones" >
+                    <p:menuitem value="Consultar pensum"   icon="ui-icon-arrowrefresh-1-w" url="#{reglasDeNavegacion.urlPensum}.xhtml"/>
+                </p:submenu>
+                <p:separator />
+                <p:submenu label="Calificaciones" >
+                    <p:submenu label="Links" icon="ui-icon-extlink">
+                        <p:submenu label="Notas">
+                            <p:menuitem value="Actuales" icon="ui-icon-home" url="#{reglasDeNavegacion.urlNotasActuales}.xhtml"/>
+                            <p:menuitem value="Registro Extendido" icon="ui-icon-home" url="#{reglasDeNavegacion.urlNotasRegistrosExtendido}.xhtml"/>
+                        </p:submenu>
+                    </p:submenu>
+                    <p:menuitem value="Mobile" icon="ui-icon-signal" />
+                </p:submenu>
+            </p:panelMenu>
+        </div>
+    </h:form>
+</f:view>
