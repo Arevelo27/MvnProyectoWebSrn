@@ -43,7 +43,8 @@
 .left_content {
     /*background-color: #dddddd;*/    
     /*background-color: rgba(0, 0, 0, 0.05);*/
-    background-color: #E4EEF2;
+    /*background-color: #E4EEF2;*/
+    background-color: white;
     padding: 15px;
     margin-left: 3px;
     /*margin-left: 170px;*/

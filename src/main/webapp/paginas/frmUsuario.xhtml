@@ -82,7 +82,7 @@
             </p:panel>
 
             <p:dataTable var="use" value="#{usuarioBn.listUser}" paginator="true" rows="10" rendered="#{!usuarioBn.form}" >
-                <p:column headerText="#{msg['frmUsuario.tipoIdentificación']}">
+                <p:column headerText="#{msg['frmUsuario.tipoIdentificación']}" style="font-size: 12px;">
                     <h:outputText value="#{use.tipoDocumento.strDescripcion}" />
                 </p:column>
                 <p:column headerText="#{msg['frmUsuario.numeIdentificación']}">

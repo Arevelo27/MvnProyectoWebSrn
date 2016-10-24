@@ -21,7 +21,7 @@ import javax.persistence.Query;
 public abstract class GenericFacadeImpl<T, E extends Serializable> implements GenericFacade<T, E> {
 
     private final Class<T> entityClass;
-    private EntityManager em;
+//    private EntityManager em;
 
     /**
      *
