@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>#{msg['nombreApp']}</title>
+        <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
+        <f:loadBundle basename="com.proyectoweb.srn.utilidades.messages" var="msg"/>
+        <link rel="shortcut icon" href="../resources/imagenes/favicon.ico"></link>
+    </h:head>
+    <h:body>
+        <p:growl id="growl" sticky="true" showDetail="true"/>
+
+        <h:form id="recover_password">
+
+            <p:panel id="contenido" style="position: absolute; margin-top: 200px; margin-left: 400px; margin-right: 400px" styleClass="centered"> 
+                <center><h1>Recuperar contraseña</h1></center>
+                <p>#{msg['vista.recuperarClave']}</p>
+                <center>
+                    <div>
+                        <p:message for="user"/>
+                        <p:message for="pass"/>
+                    </div>
+                    <p:panelGrid id="panelgLogin" columns="1" style="width:100px;height:80px;" styleClass="centered">
+                        <h:outputText value="usuario (*): "/>
+                        <p:inputText id="user" value="#{login.username}" style="margin-top: -25px; width:200px;" required="true" requiredMessage="Campo usuario es obligatorio (*)"/>
+
+                        <h:outputText value="correo electrónico (*): "/>
+                        <p:inputText id="pass" value="#{login.gmail_dir}" style="margin-top: -25px; width:200px;" required="true" requiredMessage="Campo email es obligatorio (*)"/>
+
+                        <div class="botonbuscador">
+                            <p:commandButton value="Enviar" process="recover_password" update="recover_password" action="#{login.recuperarClave()}"  style="margin-top: -55px"/>
+                        </div>
+                    </p:panelGrid>
+                    <center><a href="../index.jsp">Volver a iniciar sessión</a></center>
+                </center>
+            </p:panel>
+
+        </h:form>
+    </h:body>
+</html>
+

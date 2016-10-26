@@ -5,71 +5,74 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                template="template/tmpInicial.xhtml">
+                template="./template/tmpInicial.xhtml">
     <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
 
     <ui:define name="content">
-        <h:form id="frmRol">
-            <p:growl id="growl" showDetail="true" life="2800"/>
 
-            <!--load resource bundle for this page only--> 
-            <f:loadBundle basename="com.proyectoweb.srn.utilidades.messages" var="msg"/>
+        <p:panel id="contenido">
+            <h:form id="frmRol">
+                <p:growl id="growl" showDetail="true" life="2800"/>
 
-            <h1 style="color: black">#{msg['vista.frmRol']}</h1>
+                <!--load resource bundle for this page only--> 
+                <f:loadBundle basename="com.proyectoweb.srn.utilidades.messages" var="msg"/>
 
-            <p:commandButton value=" Nuevo Rol" 
-                             actionListener="#{rolBn.verForm()}" rendered="#{!rolBn.form}"  
-                             update="frmRol" process="@this">
+                <h1 style="color: black">#{msg['vista.frmRol']}</h1>
 
-                <br></br>
-            </p:commandButton>
+                <p:commandButton value=" Nuevo Rol" 
+                                 actionListener="#{rolBn.verForm()}" rendered="#{!rolBn.form}"  
+                                 update="frmRol" process="@this">
 
-            <p:panel header="#{msg['formularioRegistro']}" toggleable="true" rendered="#{rolBn.form}" >
-                <p:panelGrid columns="3"  >
+                    <br></br>
+                </p:commandButton>
 
-                    <h:outputText value="#{msg['frmRol.descripciom']}:"/>
-                    <p:inputText id="descRol" value="#{rolBn.desc}" required="true" requiredMessage="Campo requerido"/>
-                    <p:message for="descRol"/>
+                <p:panel header="#{msg['formularioRegistro']}" toggleable="true" rendered="#{rolBn.form}" >
+                    <p:panelGrid columns="3"  >
 
-                </p:panelGrid>
-                <p:panelGrid columns="2" >
-                    <p:commandButton value=" Volver"
-                                     action="#{rolBn.volverForm()}" process="@this" immediate="true"
-                                     update="frmRol"></p:commandButton>
-                    <p:commandButton value="Aceptar" process="frmRol" update="frmRol, growl"
-                                     action="#{rolBn.aceptar()}"></p:commandButton>
-                </p:panelGrid>
+                        <h:outputText value="#{msg['frmRol.descripciom']}:"/>
+                        <p:inputText id="descRol" value="#{rolBn.desc}" required="true" requiredMessage="Campo requerido"/>
+                        <p:message for="descRol"/>
 
-            </p:panel>
+                    </p:panelGrid>
+                    <p:panelGrid columns="2" >
+                        <p:commandButton value=" Volver"
+                                         action="#{rolBn.volverForm()}" process="@this" immediate="true"
+                                         update="frmRol"></p:commandButton>
+                        <p:commandButton value="Aceptar" process="frmRol" update="frmRol, growl"
+                                         action="#{rolBn.aceptar()}"></p:commandButton>
+                    </p:panelGrid>
 
-            <p:dataTable var="r" value="#{rolBn.listRol}" paginator="true" rows="10" rendered="#{!rolBn.form}">
-                <p:column headerText="#{msg['frmRol.descripciom']}">
-                    <h:outputText value="#{r.strDescripcion}" />
-                </p:column>
+                </p:panel>
 
-                <p:column style="width: 8%">
-                    <p:commandButton icon="ui-icon-pencil"
-                                     actionListener="#{rolBn.renderizarItem(r)}"
-                                     process="@this" update="@all"></p:commandButton>
-                    <!--                        </p:column>
-                                            <p:column>-->
-                    <p:commandButton icon="ui-icon-trash"
-                                     actionListener="#{rolBn.eliminarItem(r)}"
-                                     process="@this" update="@all">
-                        <p:confirm header="#{msg['confirmacion']}"
-                                   message="#{msg['eliminarItem']}" icon="ui-icon-alert"></p:confirm>
-                    </p:commandButton>
+                <p:dataTable var="r" value="#{rolBn.listRol}" paginator="true" rows="10" rendered="#{!rolBn.form}">
+                    <p:column headerText="#{msg['frmRol.descripciom']}">
+                        <h:outputText value="#{r.strDescripcion}" />
+                    </p:column>
 
-                    <p:confirmDialog global="true" showEffect="fade"
-                                     hideEffect="explode">
-                        <p:commandButton value="Yes" type="button"
-                                         styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                        <p:commandButton value="No" type="button"
-                                         styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                    </p:confirmDialog>
-                </p:column>
-            </p:dataTable>
-        </h:form>
+                    <p:column style="width: 8%">
+                        <p:commandButton icon="ui-icon-pencil"
+                                         actionListener="#{rolBn.renderizarItem(r)}"
+                                         process="@this" update="@all"></p:commandButton>
+                        <!--                        </p:column>
+                                                <p:column>-->
+                        <p:commandButton icon="ui-icon-trash"
+                                         actionListener="#{rolBn.eliminarItem(r)}"
+                                         process="@this" update="@all">
+                            <p:confirm header="#{msg['confirmacion']}"
+                                       message="#{msg['eliminarItem']}" icon="ui-icon-alert"></p:confirm>
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade"
+                                         hideEffect="explode">
+                            <p:commandButton value="Yes" type="button"
+                                             styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button"
+                                             styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
     </ui:define>
     <!--        </h:body>
         </f:view>-->

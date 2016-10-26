@@ -8,6 +8,8 @@ package com.proyectoweb.srn.facade.impl;
 import com.proyectoweb.srn.facade.SrnTblNotaFacade;
 import com.proyectoweb.srn.modelo.SrnTblNota;
 import com.proyectoweb.srn.utilidades.UtilidadesSeguridad;
+import java.util.List;
+import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,6 +30,26 @@ public class SrnTblNotaFacadeImpl extends GenericFacadeImpl<SrnTblNota, Integer>
 
     public SrnTblNotaFacadeImpl() {
         super(SrnTblNota.class);
+    }
+
+    @Override
+    public Integer findMaxId() throws Exception {
+        Integer id = 1;
+        try {
+            Integer maxId = (Integer) em.createNamedQuery("SrnTblNota.findByNumIdNota").getSingleResult();
+            if (maxId != null) {
+                maxId++;
+                id = maxId;
+            }
+        } catch (Exception e) {
+            System.out.println("error metodo findMaxId: " + e.getMessage() + "level: " + Level.SEVERE + " .::. " + e);
+        }
+        return id;
+    }
+
+    @Override
+    public List<SrnTblNota> buscarTodos() throws Exception {
+        return findAll();
     }
     
 }

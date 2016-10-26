@@ -13,6 +13,8 @@ import com.proyectoweb.srn.modelo.SrnTblUsuario;
  */
 public interface LoginService extends GenericService<SrnTblUsuario, String> {
 
+    SrnTblUsuario recuperarClave(String login, String email) throws Exception;
+    
     SrnTblUsuario login(String login, String contrasena) throws Exception;
 
     boolean LoginControl(String login, String contrasena) throws Exception;

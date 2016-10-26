@@ -36,10 +36,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SrnTblUsuario.findByNumIdUsuario", query = "SELECT s FROM SrnTblUsuario s WHERE s.numIdUsuario = :numIdUsuario"),
     @NamedQuery(name = "SrnTblUsuario.findByNumCodDocumento", query = "SELECT s FROM SrnTblUsuario s WHERE s.numCodDocumento = :numCodDocumento"),
     @NamedQuery(name = "SrnTblUsuario.findByStrNombre", query = "SELECT s FROM SrnTblUsuario s WHERE s.strNombre = :strNombre"),
+    @NamedQuery(name = "SrnTblUsuario.findByStrEmail", query = "SELECT s FROM SrnTblUsuario s WHERE s.strLogin = :username AND s.strEmail = :email"),
     @NamedQuery(name = "SrnTblUsuario.findByStrApellido", query = "SELECT s FROM SrnTblUsuario s WHERE s.strApellido = :strApellido"),
     @NamedQuery(name = "SrnTblUsuario.findByStrLogin", query = "SELECT s FROM SrnTblUsuario s WHERE s.strLogin = :strLogin"),
     @NamedQuery(name = "SrnTblUsuario.findByStrPassword", query = "SELECT s FROM SrnTblUsuario s WHERE s.strPassword = :strPassword")})
 public class SrnTblUsuario implements Serializable {
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioProceso")
     private List<SrnTblControlAuditoria> srnTblControlAuditoriaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "auditor")
@@ -66,7 +68,7 @@ public class SrnTblUsuario implements Serializable {
     private String strApellido;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, message = "Exede el tamaño permitido, el tamñao permitido es de 50 caracteres")
     @Column(name = "STR_LOGIN")
     private String strLogin;
     @Basic(optional = false)
@@ -74,6 +76,11 @@ public class SrnTblUsuario implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "STR_PASSWORD")
     private String strPassword;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "STR_EMAIL")
+    private String strEmail;
     @JoinColumn(name = "NUM_TIPO_DOCUMENTO", referencedColumnName = "STR_COD_TIPO_DOC")
     @ManyToOne(optional = false)
     private SrnTblTipoDocumento numTipoDocumento;
@@ -153,6 +160,14 @@ public class SrnTblUsuario implements Serializable {
         this.strPassword = strPassword;
     }
 
+    public String getEmail() {
+        return strEmail;
+    }
+
+    public void setEmail(String strEmail) {
+        this.strEmail = strEmail;
+    }
+
     public SrnTblTipoDocumento getTipoDocumento() {
         return numTipoDocumento;
     }
@@ -216,7 +231,7 @@ public class SrnTblUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyectoweb.srn.persistencia.SrnTblUsuario[ numIdUsuario=" + numIdUsuario + " ]";
+        return strNombre + " " + strApellido;
     }
 
     @XmlTransient
@@ -236,5 +251,5 @@ public class SrnTblUsuario implements Serializable {
     public void setSrnTblControlAuditoriaList1(List<SrnTblControlAuditoria> srnTblControlAuditoriaList1) {
         this.srnTblControlAuditoriaList1 = srnTblControlAuditoriaList1;
     }
-    
+
 }

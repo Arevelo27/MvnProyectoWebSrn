@@ -72,4 +72,16 @@ public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, St
         return usuario;
     }
 
+    @Override
+    public SrnTblUsuario recuperarClave(String login, String email) throws Exception {
+        SrnTblUsuario usuario = null;
+        try {
+            Query q = em.createNamedQuery("SrnTblUsuario.findByStrEmail", SrnTblUsuario.class).setParameter("username", login).setParameter("email", email);
+            usuario = (SrnTblUsuario) q.getSingleResult();
+        } catch (Exception e) {
+            System.out.println("error metodo recuperarClave: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
+        }
+        return usuario;
+    }
+
 }

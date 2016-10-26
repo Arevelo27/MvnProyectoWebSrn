@@ -20,18 +20,6 @@ public class UtilidadesSeguridad {
      */
     public static final String NOMBRE_PERSISTENCIA = "WebSrnPU";
 
-    /*Valores de conexion com servidor Gmail*/
-    public static final String SMTP_HOST = "mail.smtp.host";
-    public static final String VLR_GMAIL_COM = "smtp.gmail.com";
-    public static final String SOCKETFACTORY_PORT = "mail.smtp.socketFactory.port";
-    public static final String VLR_SOCKETFACTORY_PORT = "465";
-    public static final String SOCKETFACTORY_CLASS = "mail.smtp.socketFactory.class";
-    public static final String VLR_SSLSOCKETFACTORY = "javax.net.ssl.SSLSocketFactory";
-    public static final String SMTP_AUTH = "mail.smtp.auth";
-    public static final String VLR_AUTH = "true";
-    public static final String SMTP_PORT = "mail.smtp.port";
-    public static final String VLR_PORT = "465";
-
     /**
      * * Clase con mÃ©todos estÃ¡ticos de cifrado *
      */

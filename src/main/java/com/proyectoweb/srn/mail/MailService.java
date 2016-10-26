@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.prueba.ejemplo.mail;
+package com.proyectoweb.srn.mail;
 
 /**
  *
@@ -11,6 +11,6 @@ package com.prueba.ejemplo.mail;
  */
 public interface MailService {
 
-    void send(String to, String subject, String text);
+    boolean send(String to, String subject, String text);
 
 }

@@ -1,50 +1,84 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
-                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                 xmlns:h="http://java.sun.com/jsf/html"
-                 xmlns:f="http://java.sun.com/jsf/core"
-                 xmlns:p="http://primefaces.org/ui"
-                 template="template/tmpInicial.xhtml">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/tmpInicial.xhtml">
+    <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
 
     <ui:define name="content">
-        <!--load resource bundle for this page only--> 
-        <f:loadBundle basename="com.proyectoweb.srn.utilidades.messages" var="msg"/>
 
-        <h2>#{msg['vista.frmNotasAct']}</h2>
-        <br></br>
-        <p:panel header="Contenido #1" toggleable="true" >
-            <p:panelGrid columns="2">
-                <p:panel>
-                    <ol>
-                        <li><h:outputLabel value="#{msg.message}" /></li>
+        <p:panel id="contenido">
+            <h:form id="frmRol">
+                <p:growl id="growl" showDetail="true" life="2800"/>
 
-                        <li><h:outputText value="#{msg['message.test1']}" /></li>
+                <!--load resource bundle for this page only--> 
+                <f:loadBundle basename="com.proyectoweb.srn.utilidades.messages" var="msg"/>
 
-                        <li><h:outputText value="#{msg['message.test2']}" /></li>
-                        <!--<li><h:outputText value="#{msg['message.test2']}" escape="false" /></li>-->
+                <h1 style="color: black">#{msg['vista.frmNotasAct']}</h1>
 
-                        <li><h:outputText value="#{msg['message.test3']}" /></li>
-                        <!--<li><h:outputText value="#{msg['message.test3']}" escape="false" /></li>-->
-                    </ol>
+                <p:commandButton value=" Nuevo Nota" 
+                                 actionListener="#{notaActualBn.verForm()}" rendered="#{!notaActualBn.form}"  
+                                 update="frmRol" process="@this">
+
+                    <br></br>
+                </p:commandButton>
+
+                <p:panel header="#{msg['formularioRegistro']}" toggleable="true" rendered="#{notaActualBn.form}" >
+                    <p:panelGrid columns="3"  >
+
+                        <h:outputText value="#{msg['frmRol.descripciom']}:"/>
+                        <p:inputText id="descRol" value="#{notaActualBn.desc}" required="true" requiredMessage="Campo requerido"/>
+                        <p:message for="descRol"/>
+
+                    </p:panelGrid>
+                    <p:panelGrid columns="2" >
+                        <p:commandButton value=" Volver"
+                                         action="#{notaActualBn.volverForm()}" process="@this" immediate="true"
+                                         update="frmRol"></p:commandButton>
+                        <p:commandButton value="Aceptar" process="frmRol" update="frmRol, growl"
+                                         action="#{notaActualBn.aceptar()}"></p:commandButton>
+                    </p:panelGrid>
+
                 </p:panel>
-                <p:panel>
-                    <ol>
-                        <li>
-                            <h:outputFormat value="#{msg['message.param1']}">
-                                <f:param value="param0" />
-                            </h:outputFormat>
-                        </li>
-                        <li>
-                            <h:outputFormat value="#{msg['message.param2']}">
-                                <f:param value="param0" />
-                                <f:param value="param1" />
-                            </h:outputFormat>
-                        </li>
-                    </ol>
-                </p:panel>
-            </p:panelGrid>
+
+                <p:dataTable var="r" value="#{notaActualBn.listNota}" paginator="true" rows="10" rendered="#{!notaActualBn.form}">
+                    <p:column headerText="#{msg['frmNotasAct.p1']}">
+                        <h:outputText value="#{r.numParcialI}" />
+                    </p:column>
+                    <p:column headerText="#{msg['frmNotasAct.p2']}">
+                        <h:outputText value="#{r.numParcialIi}" />
+                    </p:column>
+                    <p:column headerText="#{msg['frmNotasAct.p3']}">
+                        <h:outputText value="#{r.numParcialIii}" />
+                    </p:column>
+
+                    <p:column style="width: 8%">
+                        <p:commandButton icon="ui-icon-pencil"
+                                         actionListener="#{notaActualBn.renderizarItem(r)}"
+                                         process="@this" update="@all"></p:commandButton>
+                        
+                        <p:commandButton icon="ui-icon-trash"
+                                         actionListener="#{notaActualBn.eliminarItem(r)}"
+                                         process="@this" update="@all">
+                            <p:confirm header="#{msg['confirmacion']}"
+                                       message="#{msg['eliminarItem']}" icon="ui-icon-alert"></p:confirm>
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade"
+                                         hideEffect="explode">
+                            <p:commandButton value="Yes" type="button"
+                                             styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button"
+                                             styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
         </p:panel>
     </ui:define>
-
+    <!--        </h:body>
+        </f:view>-->
 </ui:composition>

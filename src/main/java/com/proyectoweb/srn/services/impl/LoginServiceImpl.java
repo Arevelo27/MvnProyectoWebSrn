@@ -35,4 +35,9 @@ public class LoginServiceImpl extends GenericServiceImpl<SrnTblUsuario, String> 
         return usuarioFacade.LoginControl(login, contrasena);
     }
 
+    @Override
+    public SrnTblUsuario recuperarClave(String login, String email) throws Exception {
+        return usuarioFacade.recuperarClave(login, email);
+    }
+
 }

@@ -41,7 +41,7 @@ public class SrnTblNota implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "NUM_ID_NOTA")
-    private Long numIdNota;
+    private Integer numIdNota;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "NUM_PARCIAL_I")
     private BigDecimal numParcialI;
@@ -62,15 +62,15 @@ public class SrnTblNota implements Serializable {
     public SrnTblNota() {
     }
 
-    public SrnTblNota(Long numIdNota) {
+    public SrnTblNota(Integer numIdNota) {
         this.numIdNota = numIdNota;
     }
 
-    public Long getNumIdNota() {
+    public Integer getNumIdNota() {
         return numIdNota;
     }
 
-    public void setNumIdNota(Long numIdNota) {
+    public void setNumIdNota(Integer numIdNota) {
         this.numIdNota = numIdNota;
     }
 
