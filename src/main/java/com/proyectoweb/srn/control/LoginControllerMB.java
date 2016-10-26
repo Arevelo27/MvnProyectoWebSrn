@@ -10,6 +10,7 @@ import com.proyectoweb.srn.services.LoginService;
 import com.proyectoweb.srn.to.UsuarioTO;
 import com.proyectoweb.srn.utilidades.FacesUtils;
 import com.proyectoweb.srn.utilidades.UtilidadesSeguridad;
+import com.prueba.ejemplo.mail.MailService;
 import java.io.Serializable;
 import javax.faces.application.ViewExpiredException;
 import javax.faces.bean.ManagedBean;
@@ -39,6 +40,14 @@ public class LoginControllerMB implements Serializable {
     @Inject
     private LoginService loginService;
 
+    @Inject
+    private MailService service;
+
+    private static final String CONTENT_MAIL_TEST = "Prueba del envío de correo electrónico.";
+
+    private static final String TITLE_MAIL_TEST = "Test de envío de email.";
+
+    private static final String GMAIL_DIR = "ing2013andresfe@gmail.com";
     /**
      *
      */
@@ -71,6 +80,9 @@ public class LoginControllerMB implements Serializable {
                     usuarioTo.setNombre(usuario.getNombre());
                     usuarioTo.setRolCodigo(usuario.getCodRol().getStrDescripcion());
                     usuarioTo.setLogin(username);
+                    
+                    service.send(GMAIL_DIR, TITLE_MAIL_TEST, CONTENT_MAIL_TEST);
+                    System.out.println("que pasaaa " + service);
 
                     FacesUtils.getSession().setAttribute("usuario", usuarioTo);
                     return "frmInicio.xhtml?faces-redirect=true";
