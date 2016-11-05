@@ -59,6 +59,7 @@ public abstract class GenericFacadeImpl<T, E extends Serializable> implements Ge
      *
      * @param entity
      */
+    @Override
     public void remove(T entity) {
         getEntityManager().remove(getEntityManager().merge(entity));
     }
@@ -68,6 +69,7 @@ public abstract class GenericFacadeImpl<T, E extends Serializable> implements Ge
      * @param id
      * @return
      */
+    @Override
     public T find(Object id) {
         return getEntityManager().find(entityClass, id);
     }
@@ -92,6 +94,7 @@ public abstract class GenericFacadeImpl<T, E extends Serializable> implements Ge
      *
      * @return
      */
+    @Override
     public Integer findMax() {
         Integer id = 1;
         try {
@@ -112,6 +115,7 @@ public abstract class GenericFacadeImpl<T, E extends Serializable> implements Ge
      *
      * @return
      */
+    @Override
     public String findMaxString() {
         String id = "01";
         try {
