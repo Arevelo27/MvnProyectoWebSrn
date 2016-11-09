@@ -8,6 +8,7 @@ package com.proyectoweb.srn.facade.impl;
 import com.proyectoweb.srn.facade.SrnTblGeneroFacade;
 import com.proyectoweb.srn.modelo.SrnTblGenero;
 import com.proyectoweb.srn.utilidades.UtilidadesSeguridad;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,7 +18,7 @@ import javax.persistence.PersistenceContext;
  * @author TSI
  */
 @Stateless
-public class SrnTblGeneroFacadeImpl extends GenericFacadeImpl<SrnTblGenero, Integer> implements SrnTblGeneroFacade {
+public class SrnTblGeneroFacadeImpl extends GenericFacadeImpl<SrnTblGenero, String> implements SrnTblGeneroFacade {
 
     @PersistenceContext(unitName = UtilidadesSeguridad.NOMBRE_PERSISTENCIA)
     private EntityManager em;
@@ -29,6 +30,11 @@ public class SrnTblGeneroFacadeImpl extends GenericFacadeImpl<SrnTblGenero, Inte
 
     public SrnTblGeneroFacadeImpl() {
         super(SrnTblGenero.class);
+    }
+
+    @Override
+    public List<SrnTblGenero> buscarTodos() throws Exception {
+        return findAll();
     }
 
 }

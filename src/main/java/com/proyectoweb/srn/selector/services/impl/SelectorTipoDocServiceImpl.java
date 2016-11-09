@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.proyectoweb.srn.services.impl;
+package com.proyectoweb.srn.selector.services.impl;
 
 import com.proyectoweb.srn.facade.GenericFacade;
 import com.proyectoweb.srn.facade.SrnTblTipoDocumentoFacade;
 import com.proyectoweb.srn.modelo.SrnTblTipoDocumento;
-import com.proyectoweb.srn.services.SelectorTipoDocService;
+import com.proyectoweb.srn.selector.services.SelectorTipoDocService;
+import com.proyectoweb.srn.services.impl.GenericServiceImpl;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;

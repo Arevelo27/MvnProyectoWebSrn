@@ -6,6 +6,10 @@
 package com.proyectoweb.srn.control;
 
 import com.proyectoweb.srn.modelo.SrnTblUsuario;
+import com.proyectoweb.srn.services.EstadoService;
+import com.proyectoweb.srn.services.GeneroService;
+import com.proyectoweb.srn.services.RolService;
+import com.proyectoweb.srn.services.TipoDocService;
 import com.proyectoweb.srn.services.UsuarioService;
 import com.proyectoweb.srn.utilidades.FacesUtils;
 import java.io.Serializable;
@@ -30,13 +34,34 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
 //    @ManagedProperty(value = "#{usuarioService}")
     @Inject
     private UsuarioService usuarioService;
+    @Inject
+    private EstadoService estadoService;
+    @Inject
+    private RolService rolService;
+    @Inject
+    private GeneroService generoService;
+    @Inject
+    private TipoDocService tipoDocService;
 
     private boolean edit = false;
     private boolean form = false;
 
     private List<SrnTblUsuario> listUser;
 
+    private int id;
+    private long documento;
+    private String nombre;
+    private String apellido;
+    private String login;
+    private String password;
+    private String email;
+    private String estado;
+    private String genero;
+    private int rol;
+    private int tipoDocumento;
+
     @PostConstruct
+    @Override
     public void init() {
         try {
             listUser = new ArrayList<SrnTblUsuario>();
@@ -54,20 +79,46 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
     @Override
     public void verForm() {
         user = new SrnTblUsuario();
+        id = 0;
+        documento = 0;
+        nombre = "";
+        apellido = "";
+        login = "";
+        password = "";
+        email = "";
+        estado = "";
+        genero = "";
+        rol = 0;
+        tipoDocumento = 0;
+
         form = true;
         edit = false;
     }
 
     @Override
     public void volverForm() {
-        form = false;
-        edit = false;
+        try {
+            form = false;
+            edit = false;
+            buscarTodos();
+        } catch (Exception e) {
+            FacesUtils.controlLog("SEVERE", "Error en la clase UsuarioControllerMB del metodo volverForm: " + e.getMessage());
+        }
     }
 
     @Override
     public void renderizarItem(SrnTblUsuario u) {
         user = u;
-//        selMedida = p.getMedida();
+        documento = user.getCodDocumento();
+        nombre = user.getNombre();
+        apellido = user.getApellido();
+        login = user.getLogin();
+        password = user.getPassword();
+        email = user.getEmail();
+        estado = user.getEstado().getStrCodEstado();
+        genero = user.getGenero().getStrCodGenero();
+        rol = user.getCodRol().getNumIdRol();
+        tipoDocumento = user.getTipoDocumento().getStrCodTipoDoc();
         form = true;
         edit = true;
     }
@@ -86,21 +137,42 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
         String navegacion = "";
         try {
             if (preAction()) {
+                System.out.println(estadoService.find(estado).getStrDescripcion());
+                System.out.println(rolService.find(rol).getStrDescripcion());
+                System.out.println(generoService.find(genero).getStrDescripcion());
+                System.out.println(tipoDocService.find(tipoDocumento).getStrDescripcion());
+
                 if (!edit) {
-//                    if (personaDaoImpl.findById(productos.getId()) != null) {
-//                        productos.setId(personaDaoImpl.getCountOfAll());
-//                        productos.setMedida(selMedida);
-//                        personaDaoImpl.create(productos);
-//                        navegacion = REGLA_NAVEGACION;
-//                    }
-//                    }
-                    RequestContext.getCurrentInstance();
-                    FacesUtils.addInfoMessage("Registro exitoso");
+                    id = usuarioService.findMaxId();
+                    if (usuarioService.find(id) == null) {
+                        user.setIdUsuario(id);
+                        user.setCodDocumento(id);
+                        user.setNombre(nombre);
+                        user.setApellido(apellido);
+                        user.setLogin(login);
+                        user.setPassword(password);
+                        user.setEmail(email);
+                        user.setEstado(estadoService.find(estado));
+                        user.setGenero(generoService.find(genero));
+                        user.setCodRol(rolService.find(rol));
+                        user.setTipoDocumento(tipoDocService.find(tipoDocumento));
+
+                        usuarioService.create(user);
+
+                        mensajeInfo("Registro exitoso");
+                    }
                 } else {
-//                    personaDaoImpl.update(productos);
-//                    navegacion = REGLA_NAVEGACION;
-                    RequestContext.getCurrentInstance();
-                    FacesUtils.addInfoMessage("Actualizacón exitosa");
+                    user.setNombre(nombre);
+                    user.setApellido(apellido);
+                    user.setLogin(login);
+                    user.setPassword(password);
+                    user.setEmail(email);
+                    user.setEstado(estadoService.find(estado));
+                    user.setGenero(generoService.find(genero));
+                    user.setCodRol(rolService.find(rol));
+                    user.setTipoDocumento(tipoDocService.find(tipoDocumento));
+                    usuarioService.edit(user);
+                    mensajeInfo("Actualizacón exitosa");
                 }
             }
         } catch (Exception e) {
@@ -112,7 +184,38 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
     @Override
     public boolean preAction() {
         boolean accion = true;
+
+        if (estadoService.find(estado) == null) {
+            mensajeError("Estado no encontrado");
+            accion = false;
+        }
+
+        if (rolService.find(rol) == null) {
+            mensajeError("Rol no encontrado");
+            accion = false;
+        }
+
+        if (generoService.find(genero) == null) {
+            mensajeError("Genero no encontrado");
+            accion = false;
+        }
+
+        if (tipoDocService.find(tipoDocumento) == null) {
+            mensajeError("Tipo documento no encontrado");
+            accion = false;
+        }
+
         return accion;
+    }
+
+    public void mensajeError(String cadena) {
+        RequestContext.getCurrentInstance().update("growl");
+        FacesUtils.addErrorMessage(cadena);
+    }
+
+    public void mensajeInfo(String cadena) {
+        RequestContext.getCurrentInstance().update("growl");
+        FacesUtils.addInfoMessage(cadena);
     }
 
     public SrnTblUsuario getUser() {
@@ -145,6 +248,86 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
 
     public void setListUser(List<SrnTblUsuario> listUser) {
         this.listUser = listUser;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getRol() {
+        return rol;
+    }
+
+    public void setRol(int rol) {
+        this.rol = rol;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public int getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(int tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public long getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(long documento) {
+        this.documento = documento;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

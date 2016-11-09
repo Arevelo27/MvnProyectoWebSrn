@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.proyectoweb.srn.facade;
+package com.proyectoweb.srn.selector.services;
 
 import com.proyectoweb.srn.modelo.SrnTblGenero;
-import java.util.List;
+import com.proyectoweb.srn.services.GenericService;
 
 /**
  *
  * @author TSI
  */
-public interface SrnTblGeneroFacade extends GenericFacade<SrnTblGenero, String> {
+public interface SelectorGeneroService extends GenericService<SrnTblGenero, String> {
 
-    List<SrnTblGenero> buscarTodos() throws Exception;
+//    List<SrnTblEstado> buscarTodos() throws Exception;
 }

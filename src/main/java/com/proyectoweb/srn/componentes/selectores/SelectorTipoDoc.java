@@ -6,7 +6,7 @@
 package com.proyectoweb.srn.componentes.selectores;
 
 import com.proyectoweb.srn.modelo.SrnTblTipoDocumento;
-import com.proyectoweb.srn.services.SelectorTipoDocService;
+import com.proyectoweb.srn.selector.services.SelectorTipoDocService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;

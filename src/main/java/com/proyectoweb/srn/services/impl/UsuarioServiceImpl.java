@@ -27,6 +27,11 @@ public class UsuarioServiceImpl extends GenericServiceImpl<SrnTblUsuario, String
     }
 
     @Override
+    public Integer findMaxId() throws Exception {
+        return usuarioFacade.findMaxId();
+    }
+
+    @Override
     public List<SrnTblUsuario> findAll() {
         return usuarioFacade.findAll(); //To change body of generated methods, choose Tools | Templates.
     }

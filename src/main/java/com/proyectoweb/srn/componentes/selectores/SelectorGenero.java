@@ -1,12 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.proyectoweb.srn.componentes.selectores;
 
-import com.proyectoweb.srn.modelo.SrnTblRol;
-import com.proyectoweb.srn.selector.services.SelectorRolService;
+import com.proyectoweb.srn.modelo.SrnTblGenero;
+import com.proyectoweb.srn.selector.services.SelectorGeneroService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -17,14 +16,14 @@ import javax.inject.Inject;
 
 /**
  *
- * @author TSI
+ * @author Andres-Desarrollo2
  */
 @ManagedBean
 @RequestScoped
-public class SelectorRol extends SelectorBase<SrnTblRol, Integer> {
+public class SelectorGenero extends SelectorBase<SrnTblGenero, String> {
 
     @Inject
-    private SelectorRolService rolService;
+    private SelectorGeneroService generoService;
 
     @PostConstruct
     public void init() {
@@ -33,10 +32,10 @@ public class SelectorRol extends SelectorBase<SrnTblRol, Integer> {
 
     @Override
     public void cargarLista() {
-        List<SrnTblRol> listado = rolService.findAll();
+        List<SrnTblGenero> listado = generoService.findAll();
         setLista(new ArrayList<SelectItem>());
-        for (SrnTblRol rol : listado) {
-            getLista().add(new SelectItem(rol.getNumIdRol(), rol.getStrDescripcion()));
+        for (SrnTblGenero genero : listado) {
+            getLista().add(new SelectItem(genero.getStrCodGenero(), genero.getStrDescripcion()));
         }
     }
 

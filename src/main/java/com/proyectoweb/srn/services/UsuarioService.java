@@ -13,4 +13,5 @@ import com.proyectoweb.srn.modelo.SrnTblUsuario;
  */
 public interface UsuarioService extends GenericService<SrnTblUsuario, String> {
 
+    Integer findMaxId() throws Exception;
 }

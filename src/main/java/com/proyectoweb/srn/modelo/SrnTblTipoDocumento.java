@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SrnTblTipoDocumento.findAll", query = "SELECT s FROM SrnTblTipoDocumento s"),
+    @NamedQuery(name = "SrnTblTipoDocumento.findMaxId", query = "SELECT  max(s.strCodTipoDoc) FROM SrnTblTipoDocumento s"),
     @NamedQuery(name = "SrnTblTipoDocumento.findByStrCodTipoDoc", query = "SELECT s FROM SrnTblTipoDocumento s WHERE s.strCodTipoDoc = :strCodTipoDoc"),
     @NamedQuery(name = "SrnTblTipoDocumento.findByStrDescripcion", query = "SELECT s FROM SrnTblTipoDocumento s WHERE s.strDescripcion = :strDescripcion")})
 public class SrnTblTipoDocumento implements Serializable {
@@ -38,7 +39,7 @@ public class SrnTblTipoDocumento implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "STR_COD_TIPO_DOC")
-    private Short strCodTipoDoc;
+    private Integer strCodTipoDoc;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -50,20 +51,20 @@ public class SrnTblTipoDocumento implements Serializable {
     public SrnTblTipoDocumento() {
     }
 
-    public SrnTblTipoDocumento(Short strCodTipoDoc) {
+    public SrnTblTipoDocumento(Integer strCodTipoDoc) {
         this.strCodTipoDoc = strCodTipoDoc;
     }
 
-    public SrnTblTipoDocumento(Short strCodTipoDoc, String strDescripcion) {
+    public SrnTblTipoDocumento(Integer strCodTipoDoc, String strDescripcion) {
         this.strCodTipoDoc = strCodTipoDoc;
         this.strDescripcion = strDescripcion;
     }
 
-    public Short getStrCodTipoDoc() {
+    public Integer getStrCodTipoDoc() {
         return strCodTipoDoc;
     }
 
-    public void setStrCodTipoDoc(Short strCodTipoDoc) {
+    public void setStrCodTipoDoc(Integer strCodTipoDoc) {
         this.strCodTipoDoc = strCodTipoDoc;
     }
 

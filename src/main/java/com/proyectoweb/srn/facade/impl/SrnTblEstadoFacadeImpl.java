@@ -8,6 +8,8 @@ package com.proyectoweb.srn.facade.impl;
 import com.proyectoweb.srn.facade.SrnTblEstadoFacade;
 import com.proyectoweb.srn.modelo.SrnTblEstado;
 import com.proyectoweb.srn.utilidades.UtilidadesSeguridad;
+import java.util.List;
+import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,7 +19,7 @@ import javax.persistence.PersistenceContext;
  * @author TSI
  */
 @Stateless
-public class SrnTblEstadoFacadeImpl extends GenericFacadeImpl<SrnTblEstado, Integer> implements SrnTblEstadoFacade {
+public class SrnTblEstadoFacadeImpl extends GenericFacadeImpl<SrnTblEstado, String> implements SrnTblEstadoFacade {
 
     @PersistenceContext(unitName = UtilidadesSeguridad.NOMBRE_PERSISTENCIA)
     private EntityManager em;
@@ -29,6 +31,11 @@ public class SrnTblEstadoFacadeImpl extends GenericFacadeImpl<SrnTblEstado, Inte
 
     public SrnTblEstadoFacadeImpl() {
         super(SrnTblEstado.class);
+    }
+
+    @Override
+    public List<SrnTblEstado> buscarTodos() throws Exception {
+        return findAll();
     }
 
 }

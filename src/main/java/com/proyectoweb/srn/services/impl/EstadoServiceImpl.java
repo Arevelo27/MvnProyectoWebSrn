@@ -8,27 +8,27 @@ package com.proyectoweb.srn.services.impl;
 import com.proyectoweb.srn.facade.GenericFacade;
 import com.proyectoweb.srn.facade.SrnTblEstadoFacade;
 import com.proyectoweb.srn.modelo.SrnTblEstado;
-import com.proyectoweb.srn.services.SelectorEstadoService;
+import com.proyectoweb.srn.services.EstadoService;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
-@Service(SelectorEstadoServiceImpl.NAME_SERVICE)
-public class SelectorEstadoServiceImpl extends GenericServiceImpl<SrnTblEstado, Integer> implements SelectorEstadoService {
+@Service(EstadoServiceImpl.NAME_SERVICE)
+public class EstadoServiceImpl extends GenericServiceImpl<SrnTblEstado, String> implements EstadoService {
 
-    static final String NAME_SERVICE = "selectorEstadoService";
+    static final String NAME_SERVICE = "estadoService";
 
     @Inject
     private SrnTblEstadoFacade estadoFacade;
 
     @Override
-    public GenericFacade<SrnTblEstado, Integer> getFacade() {
+    public GenericFacade<SrnTblEstado, String> getFacade() {
         return estadoFacade;
     }
 
     @Override
-    public List<SrnTblEstado> findAll() {
-        return estadoFacade.findAll();
+    public List<SrnTblEstado> buscarTodos() throws Exception {
+        return estadoFacade.buscarTodos();
     }
 
 }

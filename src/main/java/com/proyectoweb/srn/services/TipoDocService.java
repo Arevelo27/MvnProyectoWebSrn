@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.proyectoweb.srn.facade;
+package com.proyectoweb.srn.services;
 
 import com.proyectoweb.srn.modelo.SrnTblTipoDocumento;
 import java.util.List;
@@ -12,10 +12,13 @@ import java.util.List;
  *
  * @author TSI
  */
-public interface SrnTblTipoDocumentoFacade extends GenericFacade<SrnTblTipoDocumento, Integer>{
+public interface TipoDocService extends GenericService<SrnTblTipoDocumento, Integer> {
 
     Integer findMaxId() throws Exception;
-    
+
+    /**
+     *
+     * @return @throws Exception
+     */
     List<SrnTblTipoDocumento> buscarTodos() throws Exception;
-    
 }

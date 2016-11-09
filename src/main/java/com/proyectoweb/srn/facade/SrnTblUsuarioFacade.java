@@ -12,7 +12,9 @@ import com.proyectoweb.srn.modelo.SrnTblUsuario;
  * @author TSI
  */
 public interface SrnTblUsuarioFacade extends GenericFacade<SrnTblUsuario, String> {
-
+    
+    Integer findMaxId() throws Exception;
+    
     SrnTblUsuario recuperarClave(String login, String email) throws Exception;
     
     SrnTblUsuario login(String login, String contrasena) throws Exception;

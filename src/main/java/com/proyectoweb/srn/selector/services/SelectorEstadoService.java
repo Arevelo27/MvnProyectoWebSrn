@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.proyectoweb.srn.services;
+package com.proyectoweb.srn.selector.services;
 
 import com.proyectoweb.srn.modelo.SrnTblEstado;
-import java.util.List;
+import com.proyectoweb.srn.services.GenericService;
 
 /**
  *
  * @author TSI
  */
-public interface SelectorEstadoService extends GenericService<SrnTblEstado, Integer> {
+public interface SelectorEstadoService extends GenericService<SrnTblEstado, String> {
 
 //    List<SrnTblEstado> buscarTodos() throws Exception;
 }

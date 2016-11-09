@@ -84,4 +84,20 @@ public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, St
         return usuario;
     }
 
+    @Override
+    public Integer findMaxId() throws Exception {
+        Integer id = 1;
+        try {
+            Integer maxId = (Integer) em.createNamedQuery("SrnTblUsuario.findMaxId").getSingleResult();
+            if (maxId != null) {
+                maxId++;
+                id = maxId;
+            }
+        } catch (Exception e) {
+            System.out.println("[SrnTblUsuarioFacadeImpl] - error metodo findMaxId: " + e.getMessage() + "level: " + Level.SEVERE + " .::. " + e);
+//            LogUtil.log("error metodo findMax:" + e.getMessage(), Level.SEVERE, e);
+        }
+        return id;
+    }
+
 }

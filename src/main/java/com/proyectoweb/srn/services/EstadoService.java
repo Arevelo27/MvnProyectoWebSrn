@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.proyectoweb.srn.facade;
+package com.proyectoweb.srn.services;
 
 import com.proyectoweb.srn.modelo.SrnTblEstado;
 import java.util.List;
@@ -12,7 +12,11 @@ import java.util.List;
  *
  * @author TSI
  */
-public interface SrnTblEstadoFacade extends GenericFacade<SrnTblEstado, String> {
+public interface EstadoService extends GenericService<SrnTblEstado, String> {
 
+    /**
+     *
+     * @return @throws Exception
+     */
     List<SrnTblEstado> buscarTodos() throws Exception;
 }

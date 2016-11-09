@@ -5,7 +5,7 @@
 package com.proyectoweb.srn.componentes.selectores;
 
 import com.proyectoweb.srn.modelo.SrnTblEstado;
-import com.proyectoweb.srn.services.SelectorEstadoService;
+import com.proyectoweb.srn.selector.services.SelectorEstadoService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -20,7 +20,7 @@ import javax.inject.Inject;
  */
 @ManagedBean
 @RequestScoped
-public class SelectorEstado extends SelectorBase<SrnTblEstado, Integer> {
+public class SelectorEstado extends SelectorBase<SrnTblEstado, String> {
 
     @Inject
     private SelectorEstadoService rolService;

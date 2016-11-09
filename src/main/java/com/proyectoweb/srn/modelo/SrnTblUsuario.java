@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SrnTblUsuario.loginControl", query = "SELECT f FROM SrnTblUsuario f WHERE f.strLogin = :username AND f.strPassword = :password"),
+    @NamedQuery(name = "SrnTblUsuario.findMaxId", query = "SELECT  max(s.numIdUsuario) FROM SrnTblUsuario s"),
     @NamedQuery(name = "SrnTblUsuario.findAll", query = "SELECT s FROM SrnTblUsuario s"),
     @NamedQuery(name = "SrnTblUsuario.findByNumIdUsuario", query = "SELECT s FROM SrnTblUsuario s WHERE s.numIdUsuario = :numIdUsuario"),
     @NamedQuery(name = "SrnTblUsuario.findByNumCodDocumento", query = "SELECT s FROM SrnTblUsuario s WHERE s.numCodDocumento = :numCodDocumento"),
@@ -51,7 +52,7 @@ public class SrnTblUsuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "NUM_ID_USUARIO")
-    private Long numIdUsuario;
+    private Integer numIdUsuario;
     @Basic(optional = false)
     @NotNull
     @Column(name = "NUM_COD_DOCUMENTO")
@@ -99,11 +100,11 @@ public class SrnTblUsuario implements Serializable {
     public SrnTblUsuario() {
     }
 
-    public SrnTblUsuario(Long numIdUsuario) {
+    public SrnTblUsuario(Integer numIdUsuario) {
         this.numIdUsuario = numIdUsuario;
     }
 
-    public SrnTblUsuario(Long numIdUsuario, long numCodDocumento, String strNombre, String strApellido, String strLogin, String strPassword) {
+    public SrnTblUsuario(Integer numIdUsuario, long numCodDocumento, String strNombre, String strApellido, String strLogin, String strPassword) {
         this.numIdUsuario = numIdUsuario;
         this.numCodDocumento = numCodDocumento;
         this.strNombre = strNombre;
@@ -112,11 +113,11 @@ public class SrnTblUsuario implements Serializable {
         this.strPassword = strPassword;
     }
 
-    public Long getIdUsuario() {
+    public Integer getIdUsuario() {
         return numIdUsuario;
     }
 
-    public void setIdUsuario(Long numIdUsuario) {
+    public void setIdUsuario(Integer numIdUsuario) {
         this.numIdUsuario = numIdUsuario;
     }
 

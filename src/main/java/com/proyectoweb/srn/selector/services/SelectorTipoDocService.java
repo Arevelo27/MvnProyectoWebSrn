@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.proyectoweb.srn.services;
+package com.proyectoweb.srn.selector.services;
 
 import com.proyectoweb.srn.modelo.SrnTblTipoDocumento;
+import com.proyectoweb.srn.services.GenericService;
 
 /**
  *
