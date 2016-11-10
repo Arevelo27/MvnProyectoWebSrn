@@ -6,7 +6,6 @@
 package com.proyectoweb.srn.modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SrnTblNota.findAll", query = "SELECT s FROM SrnTblNota s"),
+    @NamedQuery(name = "SrnTblNota.findMaxId", query = "SELECT  max(s.numIdNota) FROM SrnTblNota s"),
     @NamedQuery(name = "SrnTblNota.findByNumIdNota", query = "SELECT s FROM SrnTblNota s WHERE s.numIdNota = :numIdNota"),
     @NamedQuery(name = "SrnTblNota.findByNumParcialI", query = "SELECT s FROM SrnTblNota s WHERE s.numParcialI = :numParcialI"),
     @NamedQuery(name = "SrnTblNota.findByNumParcialIi", query = "SELECT s FROM SrnTblNota s WHERE s.numParcialIi = :numParcialIi"),
@@ -44,17 +44,17 @@ public class SrnTblNota implements Serializable {
     private Integer numIdNota;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "NUM_PARCIAL_I")
-    private BigDecimal numParcialI;
+    private Double numParcialI;
     @Column(name = "NUM_PARCIAL_II")
-    private BigDecimal numParcialIi;
+    private Double numParcialIi;
     @Column(name = "NUM_PARCIAL_III")
-    private BigDecimal numParcialIii;
+    private Double numParcialIii;
     @Column(name = "NUM_NOTA_ADICIONAL")
-    private BigDecimal numNotaAdicional;
+    private Double numNotaAdicional;
     @Column(name = "NUM_PRYECTO")
-    private BigDecimal numPryecto;
+    private Double numPryecto;
     @Column(name = "NUM_NOTA_FINAL")
-    private BigDecimal numNotaFinal;
+    private Double numNotaFinal;
     @JoinColumn(name = "NUM_COD_MATERIAUSER", referencedColumnName = "NUM_ID_MATERIAUSER")
     @ManyToOne(optional = false)
     private SrnTblMateriaUsuario numCodMateriauser;
@@ -74,51 +74,51 @@ public class SrnTblNota implements Serializable {
         this.numIdNota = numIdNota;
     }
 
-    public BigDecimal getNumParcialI() {
+    public Double getNumParcialI() {
         return numParcialI;
     }
 
-    public void setNumParcialI(BigDecimal numParcialI) {
+    public void setNumParcialI(Double numParcialI) {
         this.numParcialI = numParcialI;
     }
 
-    public BigDecimal getNumParcialIi() {
+    public Double getNumParcialIi() {
         return numParcialIi;
     }
 
-    public void setNumParcialIi(BigDecimal numParcialIi) {
+    public void setNumParcialIi(Double numParcialIi) {
         this.numParcialIi = numParcialIi;
     }
 
-    public BigDecimal getNumParcialIii() {
+    public Double getNumParcialIii() {
         return numParcialIii;
     }
 
-    public void setNumParcialIii(BigDecimal numParcialIii) {
+    public void setNumParcialIii(Double numParcialIii) {
         this.numParcialIii = numParcialIii;
     }
 
-    public BigDecimal getNumNotaAdicional() {
+    public Double getNumNotaAdicional() {
         return numNotaAdicional;
     }
 
-    public void setNumNotaAdicional(BigDecimal numNotaAdicional) {
+    public void setNumNotaAdicional(Double numNotaAdicional) {
         this.numNotaAdicional = numNotaAdicional;
     }
 
-    public BigDecimal getNumPryecto() {
+    public Double getNumPryecto() {
         return numPryecto;
     }
 
-    public void setNumPryecto(BigDecimal numPryecto) {
+    public void setNumPryecto(Double numPryecto) {
         this.numPryecto = numPryecto;
     }
 
-    public BigDecimal getNumNotaFinal() {
+    public Double getNumNotaFinal() {
         return numNotaFinal;
     }
 
-    public void setNumNotaFinal(BigDecimal numNotaFinal) {
+    public void setNumNotaFinal(Double numNotaFinal) {
         this.numNotaFinal = numNotaFinal;
     }
 

@@ -36,7 +36,7 @@ public class SrnTblNotaFacadeImpl extends GenericFacadeImpl<SrnTblNota, Integer>
     public Integer findMaxId() throws Exception {
         Integer id = 1;
         try {
-            Integer maxId = (Integer) em.createNamedQuery("SrnTblNota.findByNumIdNota").getSingleResult();
+            Integer maxId = (Integer) em.createNamedQuery("SrnTblNota.findMaxId").getSingleResult();
             if (maxId != null) {
                 maxId++;
                 id = maxId;
