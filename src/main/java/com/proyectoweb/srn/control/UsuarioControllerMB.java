@@ -137,14 +137,14 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
         String navegacion = "";
         try {
             if (preAction()) {
-                System.out.println(estadoService.find(estado).getStrDescripcion());
-                System.out.println(rolService.find(rol).getStrDescripcion());
-                System.out.println(generoService.find(genero).getStrDescripcion());
-                System.out.println(tipoDocService.find(tipoDocumento).getStrDescripcion());
+                System.out.println(estadoService.findById(estado).getStrDescripcion());
+                System.out.println(rolService.findById(rol).getStrDescripcion());
+                System.out.println(generoService.findById(genero).getStrDescripcion());
+                System.out.println(tipoDocService.findById(tipoDocumento).getStrDescripcion());
 
                 if (!edit) {
                     id = usuarioService.findMaxId();
-                    if (usuarioService.find(id) == null) {
+                    if (usuarioService.findById(id) == null) {
                         user.setIdUsuario(id);
                         user.setCodDocumento(id);
                         user.setNombre(nombre);
@@ -152,10 +152,10 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
                         user.setLogin(login);
                         user.setPassword(password);
                         user.setEmail(email);
-                        user.setEstado(estadoService.find(estado));
-                        user.setGenero(generoService.find(genero));
-                        user.setCodRol(rolService.find(rol));
-                        user.setTipoDocumento(tipoDocService.find(tipoDocumento));
+                        user.setEstado(estadoService.findById(estado));
+                        user.setGenero(generoService.findById(genero));
+                        user.setCodRol(rolService.findById(rol));
+                        user.setTipoDocumento(tipoDocService.findById(tipoDocumento));
 
                         usuarioService.create(user);
 
@@ -167,10 +167,10 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
                     user.setLogin(login);
                     user.setPassword(password);
                     user.setEmail(email);
-                    user.setEstado(estadoService.find(estado));
-                    user.setGenero(generoService.find(genero));
-                    user.setCodRol(rolService.find(rol));
-                    user.setTipoDocumento(tipoDocService.find(tipoDocumento));
+                    user.setEstado(estadoService.findById(estado));
+                    user.setGenero(generoService.findById(genero));
+                    user.setCodRol(rolService.findById(rol));
+                    user.setTipoDocumento(tipoDocService.findById(tipoDocumento));
                     usuarioService.edit(user);
                     mensajeInfo("Actualizacón exitosa");
                 }
@@ -185,22 +185,22 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
     public boolean preAction() {
         boolean accion = true;
 
-        if (estadoService.find(estado) == null) {
+        if (estadoService.findById(estado) == null) {
             mensajeError("Estado no encontrado");
             accion = false;
         }
 
-        if (rolService.find(rol) == null) {
+        if (rolService.findById(rol) == null) {
             mensajeError("Rol no encontrado");
             accion = false;
         }
 
-        if (generoService.find(genero) == null) {
+        if (generoService.findById(genero) == null) {
             mensajeError("Genero no encontrado");
             accion = false;
         }
 
-        if (tipoDocService.find(tipoDocumento) == null) {
+        if (tipoDocService.findById(tipoDocumento) == null) {
             mensajeError("Tipo documento no encontrado");
             accion = false;
         }

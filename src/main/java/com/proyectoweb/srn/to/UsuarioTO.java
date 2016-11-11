@@ -12,6 +12,7 @@ package com.proyectoweb.srn.to;
 public class UsuarioTO {
 
     //atributos
+    private int idUser;
     private String codigo;
     private String nombre;
     private String apellidos;
@@ -22,6 +23,14 @@ public class UsuarioTO {
 
     public UsuarioTO() {
 
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getApellidos() {

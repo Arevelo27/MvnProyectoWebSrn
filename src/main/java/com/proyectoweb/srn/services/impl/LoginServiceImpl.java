@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 @Service(LoginServiceImpl.NAME_SERVICE)
-public class LoginServiceImpl extends GenericServiceImpl<SrnTblUsuario, String> implements LoginService {
+public class LoginServiceImpl extends GenericServiceImpl<SrnTblUsuario, Integer> implements LoginService {
 
     static final String NAME_SERVICE = "loginService";
 
@@ -21,7 +21,7 @@ public class LoginServiceImpl extends GenericServiceImpl<SrnTblUsuario, String> 
     private SrnTblUsuarioFacade usuarioFacade;
 
     @Override
-    public GenericFacade<SrnTblUsuario, String> getFacade() {
+    public GenericFacade<SrnTblUsuario, Integer> getFacade() {
         return usuarioFacade;
     }
 

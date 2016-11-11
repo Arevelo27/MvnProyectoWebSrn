@@ -45,10 +45,10 @@ public class LoginControllerMB implements Serializable {
 //    @ManagedProperty(value = "#{loginService}")
     @Inject
     private LoginService loginService;
-
+    
     @Inject
     private MailService service;
-
+    
     ;
 
     /**
@@ -69,13 +69,13 @@ public class LoginControllerMB implements Serializable {
             usuarioTo = new UsuarioTO();
             String password_md5 = UtilidadesSeguridad.getMD5(this.password);
             System.out.println(password_md5);
-
+            
             esNull = FacesUtils.isNotNull(username) && FacesUtils.isNotNull(password);
             if (esNull) {
                 if (loginService.LoginControl(username, password_md5)) {
                     esNull = false;
                     usuario = loginService.login(username, password_md5);
-
+                    usuarioTo.setIdUser(usuario.getIdUsuario());
                     usuarioTo.setApellidos(usuario.getApellido());
                     usuarioTo.setCodigo(usuario.getCodDocumento() + "");
                     usuarioTo.setContrasena(password_md5);
@@ -83,7 +83,7 @@ public class LoginControllerMB implements Serializable {
                     usuarioTo.setNombre(usuario.getNombre());
                     usuarioTo.setRolCodigo(usuario.getCodRol().getStrDescripcion());
                     usuarioTo.setLogin(username);
-
+                    
                     FacesUtils.getSession().setAttribute("usuario", usuarioTo);
                     return "frmInicio.xhtml?faces-redirect=true";
                 } else {
@@ -94,7 +94,7 @@ public class LoginControllerMB implements Serializable {
                 mensajeError("Los campos no pueden ser nulos");
                 return "";
             }
-
+            
         } catch (ViewExpiredException e) {
             FacesUtils.controlLog("INFO", e.getMessage());
             UtilidadesSeguridad.getControlSession("endsession.jsp");
@@ -113,7 +113,7 @@ public class LoginControllerMB implements Serializable {
             UtilidadesSeguridad.getControlSession("endsession.jsp");
         }
     }
-
+    
     public String recuperarClave() {
         try {
             esNull = FacesUtils.isNotNull(username) && FacesUtils.isNotNull(gmail_dir);
@@ -122,17 +122,17 @@ public class LoginControllerMB implements Serializable {
                 usuario = loginService.recuperarClave(username, gmail_dir);
                 if (usuario != null) {
                     esNull = false;
-
+                    
                     boolean enviado = service.send(gmail_dir, usuario.toString(), vlrClave);
                     if (enviado) {
                         System.out.println("se envio");
                         String password_md5 = UtilidadesSeguridad.getMD5(vlrClave);
                         usuario.setPassword(password_md5);
                         loginService.edit(usuario);
-
+                        
                         username = "";
                         gmail_dir = "";
-
+                        
                         mensajeInfo("Correo enviado, por favor verifique su cuenta y vuelva a iniciar session");
                     } else {
                         System.out.println("No se envio");
@@ -148,15 +148,15 @@ public class LoginControllerMB implements Serializable {
         } catch (Exception e) {
             Logger.getLogger(MailServiceImpl.class.getName()).log(Level.SEVERE, null, e);
         }
-
+        
         return "";
     }
-
+    
     public void mensajeError(String cadena) {
         RequestContext.getCurrentInstance().update("growl");
         FacesUtils.addErrorMessage(cadena);
     }
-
+    
     public void mensajeInfo(String cadena) {
         RequestContext.getCurrentInstance().update("growl");
         FacesUtils.addInfoMessage(cadena);
@@ -193,17 +193,17 @@ public class LoginControllerMB implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    
     public void setLoginService(LoginService loginService) {
         this.loginService = loginService;
     }
-
+    
     public String getGmail_dir() {
         return gmail_dir;
     }
-
+    
     public void setGmail_dir(String gmail_dir) {
         this.gmail_dir = gmail_dir;
     }
-
+    
 }

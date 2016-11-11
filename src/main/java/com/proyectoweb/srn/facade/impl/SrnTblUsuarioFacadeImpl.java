@@ -8,6 +8,7 @@ package com.proyectoweb.srn.facade.impl;
 import com.proyectoweb.srn.facade.SrnTblUsuarioFacade;
 import com.proyectoweb.srn.modelo.SrnTblUsuario;
 import com.proyectoweb.srn.utilidades.UtilidadesSeguridad;
+import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,7 +20,7 @@ import javax.persistence.Query;
  * @author TSI
  */
 @Stateless
-public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, String> implements SrnTblUsuarioFacade{
+public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, Integer> implements SrnTblUsuarioFacade{
     @PersistenceContext(unitName = UtilidadesSeguridad.NOMBRE_PERSISTENCIA)
     private EntityManager em;
 
@@ -98,6 +99,18 @@ public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, St
 //            LogUtil.log("error metodo findMax:" + e.getMessage(), Level.SEVERE, e);
         }
         return id;
+    }
+
+    @Override
+    public List<SrnTblUsuario> findByCriterio(String criterio) {
+        List<SrnTblUsuario> list = null;
+        try {
+            list = em.createNamedQuery("SrnTblUsuario.findByCriterio").setParameter("rol", 3).setParameter("criterio", "%" + criterio.trim() + "%").getResultList();
+        } catch (Exception e) {
+            System.out.println("error metodo findAll: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
+//            LogUtil.log("error metodo findAll:" + egetMessage(), Level.SEVERE, e);
+        }
+        return list;
     }
 
 }

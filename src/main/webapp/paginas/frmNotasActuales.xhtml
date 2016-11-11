@@ -29,6 +29,21 @@
                 <p:panel header="#{msg['formularioRegistro']}" toggleable="true" rendered="#{notaActualBn.form}" >
                     <p:panelGrid columns="3"  >
 
+                        <h:outputText value="Materia prima" />
+                        <p:autoComplete size="100" 
+                                        dropdown="true"
+                                        id="buscadorMateriaPrima" var="it" itemLabel="#{it}"
+                                        itemValue="#{it}"
+                                        converter="#{notaActualBn.autocompletarUsuario.conversorItems}"
+                                        value="#{notaActualBn.autocompletarUsuario.seleccionado}"
+                                        completeMethod="#{notaActualBn.autocompletarUsuario.completarBusqueda}">
+                            <p:ajax event="itemSelect" update="@all" process="@this"
+                                    listener="#{notaActualBn.autocompletarUsuario.seleccionar}">
+
+                            </p:ajax>
+                        </p:autoComplete>
+                        <p:message for="buscadorMateriaPrima"></p:message>
+
                         <h:outputText value="#{msg['frmNotasAct.p1']}:"/>
                         <p:inputText id="descRol1" value="#{notaActualBn.num1}" validatorMessage="No se permite esta nota" converter="#{Float}" converterMessage="No es un formaro correcto" required="true" requiredMessage="Campo requerido">
                             <f:convertNumber maxIntegerDigits="1" maxFractionDigits="2" />
@@ -72,6 +87,12 @@
                 </p:panel>
 
                 <p:dataTable var="r" value="#{notaActualBn.listNota}" paginator="true" rows="10" rendered="#{!notaActualBn.form}">
+                    <p:column headerText="#{msg['frmNotasAct.p1']}">
+                        <h:outputText value="#{r.numCodMateriauser.numCodMateria.strNombreMateria}" />
+                    </p:column>
+                    <p:column headerText="#{msg['frmNotasAct.p1']}">
+                        <h:outputText value="#{r.numCodMateriauser.numCodUsuario.toString()}" />
+                    </p:column>
                     <p:column headerText="#{msg['frmNotasAct.p1']}">
                         <h:outputText value="#{r.numParcialI}" />
                     </p:column>

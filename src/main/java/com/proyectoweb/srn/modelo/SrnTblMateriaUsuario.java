@@ -42,6 +42,9 @@ public class SrnTblMateriaUsuario implements Serializable {
     @JoinColumn(name = "NUM_COD_USUARIO", referencedColumnName = "NUM_ID_USUARIO")
     @ManyToOne(optional = false)
     private SrnTblUsuario numCodUsuario;
+    @JoinColumn(name = "NUM_COD_DOCENTE", referencedColumnName = "NUM_ID_USUARIO")
+    @ManyToOne(optional = false)
+    private SrnTblUsuario numCodDocente;
     @JoinColumn(name = "NUM_COD_MATERIA", referencedColumnName = "NUM_ID_MATERIA")
     @ManyToOne(optional = false)
     private SrnTblMateria numCodMateria;
@@ -77,6 +80,14 @@ public class SrnTblMateriaUsuario implements Serializable {
 
     public void setNumCodMateria(SrnTblMateria numCodMateria) {
         this.numCodMateria = numCodMateria;
+    }
+
+    public SrnTblUsuario getNumCodDocente() {
+        return numCodDocente;
+    }
+
+    public void setNumCodDocente(SrnTblUsuario numCodDocente) {
+        this.numCodDocente = numCodDocente;
     }
 
     @XmlTransient

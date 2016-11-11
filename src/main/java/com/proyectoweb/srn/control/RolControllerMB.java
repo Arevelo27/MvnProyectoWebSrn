@@ -111,7 +111,7 @@ public class RolControllerMB implements GenericBean<SrnTblRol>, Serializable {
             if (preAction()) {
                 if (!edit) {
                     id = rolService.findMaxId();
-                    if (rolService.find(id) == null) {
+                    if (rolService.findById(id) == null) {
                         rol.setNumIdRol(id);
                         rol.setStrDescripcion(desc);
                         rolService.create(rol);

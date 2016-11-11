@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SrnTblUsuario.findByNumIdUsuario", query = "SELECT s FROM SrnTblUsuario s WHERE s.numIdUsuario = :numIdUsuario"),
     @NamedQuery(name = "SrnTblUsuario.findByNumCodDocumento", query = "SELECT s FROM SrnTblUsuario s WHERE s.numCodDocumento = :numCodDocumento"),
     @NamedQuery(name = "SrnTblUsuario.findByStrNombre", query = "SELECT s FROM SrnTblUsuario s WHERE s.strNombre = :strNombre"),
+    @NamedQuery(name = "SrnTblUsuario.findByCriterio", query = "SELECT s FROM SrnTblUsuario s WHERE  s.numCodRol.numIdRol = :rol AND (s.numCodDocumento like :criterio or s.strNombre like :criterio or s.strApellido like :criterio)"),
     @NamedQuery(name = "SrnTblUsuario.findByStrEmail", query = "SELECT s FROM SrnTblUsuario s WHERE s.strLogin = :username AND s.strEmail = :email"),
     @NamedQuery(name = "SrnTblUsuario.findByStrApellido", query = "SELECT s FROM SrnTblUsuario s WHERE s.strApellido = :strApellido"),
     @NamedQuery(name = "SrnTblUsuario.findByStrLogin", query = "SELECT s FROM SrnTblUsuario s WHERE s.strLogin = :strLogin"),

@@ -293,4 +293,8 @@ public class FacesUtils {
                 break;
         }
     }
+    
+    public static double Redondear(double numero) {
+        return Math.rint(numero * 100) / 100;
+    }
 }

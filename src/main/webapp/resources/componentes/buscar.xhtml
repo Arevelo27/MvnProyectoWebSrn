@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="codValue" />
+        <cc:attribute name="displayValue"/>        
+        <cc:attribute name="buscarListener" required="true" method-signature="void actionListener(javax.faces.event.ActionEvent)"/>
+        <cc:attribute name="activoBoton" required="false" default="true"  />
+        <cc:attribute name="etiquetaBoton" default="Buscar..."/>
+        <cc:attribute name="requerido" default="false"/>
+        <cc:attribute name="mensajeRequerido" default="Por favor seleccione una opcion valida"/>
+    </cc:interface>
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:panelGrid columns="3">
+            <p:inputText value="#{cc.attrs.codValue}"
+                           size="8"
+                           readonly="true"
+                           id="buscarCriterio"
+                           requiredMessage="${cc.attrs.mensajeRequerido}"
+                           required="${cc.attrs.requerido}"/>
+            <p:inputText value="#{cc.attrs.displayValue}"
+                           size="40"
+                           readonly="true"
+                           id="buscarTexto"/>
+            <p:commandButton id="buscarCmdFrm"
+                               actionListener="#{cc.attrs.buscarListener}"
+                               value="#{cc.attrs.etiquetaBoton}"
+                               disabled="${!cc.attrs.activoBoton}"
+                               immediate="true"/>
+        </p:panelGrid>
+    </cc:implementation>
+</html>

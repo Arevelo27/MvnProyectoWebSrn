@@ -9,7 +9,6 @@ import com.proyectoweb.srn.facade.SrnTblEstadoFacade;
 import com.proyectoweb.srn.modelo.SrnTblEstado;
 import com.proyectoweb.srn.utilidades.UtilidadesSeguridad;
 import java.util.List;
-import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

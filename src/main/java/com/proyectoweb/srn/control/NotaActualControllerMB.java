@@ -5,13 +5,18 @@
  */
 package com.proyectoweb.srn.control;
 
+import com.proyectoweb.srn.componentes.autocomplete.AutocompletarUsuario;
 import com.proyectoweb.srn.modelo.SrnTblNota;
 import com.proyectoweb.srn.services.NotaService;
+import com.proyectoweb.srn.services.UsuarioService;
+import com.proyectoweb.srn.to.UsuarioTO;
 import com.proyectoweb.srn.utilidades.FacesUtils;
+import com.proyectoweb.srn.utilidades.UtilidadesSeguridad;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.ViewExpiredException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
@@ -29,10 +34,13 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
     private int id;
     private String desc;
 
-    /*Debemos cambiar este ejb e investigar otro servicio*/
-//    @ManagedProperty(value = "#{notaService}")
     @Inject
     private NotaService notaService;
+    @Inject
+    private UsuarioService usuarioService;
+
+    private UsuarioTO usuarioTo;
+    private String nombre;
 
     private boolean edit = false;
     private boolean form = false;
@@ -40,6 +48,8 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
     double num1, num2, num3, notaAdi, notaProy, suma, promedio;
 
     private List<SrnTblNota> listNota;
+
+    private AutocompletarUsuario autocompletarUsuario;
 
     /**
      *
@@ -50,6 +60,18 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
         try {
             listNota = new ArrayList<SrnTblNota>();
             buscarTodos();
+            usuarioSession();
+
+            autocompletarUsuario = new AutocompletarUsuario() {
+
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public UsuarioService usuarioService() {
+                    return usuarioService;
+                }
+            };
+            
         } catch (Exception e) {
             FacesUtils.controlLog("SEVERE", "Error en la clase LoginControllerMB del metodo init: " + e.getMessage());
         }
@@ -97,12 +119,13 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
     @Override
     public void renderizarItem(SrnTblNota r) {
         nota = r;
-        num1 = Redondear(r.getNumParcialI());
-        num2 = Redondear(r.getNumParcialIi());
-        num3 = Redondear(r.getNumParcialIii());
+        num1 = FacesUtils.Redondear(r.getNumParcialI());
+        num2 = FacesUtils.Redondear(r.getNumParcialIi());
+        num3 = FacesUtils.Redondear(r.getNumParcialIii());
         notaAdi = r.getNumNotaAdicional();
-        notaProy = Redondear(r.getNumPryecto());
+        notaProy = FacesUtils.Redondear(r.getNumPryecto());
         promedio = r.getNumNotaFinal();
+        autocompletarUsuario.setSeleccionado(nota.getNumCodMateriauser().getNumCodUsuario());
         form = true;
         edit = true;
         //multiplica por 50 y divide por 10
@@ -125,7 +148,7 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
             if (preAction()) {
                 if (!edit) {
                     id = notaService.findMaxId();
-                    if (notaService.find(id) == null) {
+                    if (notaService.findById(id) == null) {
                         nota.setNumIdNota(id);
 
                         nota.setNumParcialI(num1);
@@ -134,16 +157,16 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
                         nota.setNumNotaAdicional(notaAdi);
                         nota.setNumPryecto(notaProy);
 
-                        suma = (Redondear(num1 * 0.20) + Redondear(num2 * 0.20) + Redondear(num3 * 0.25) + notaAdi * 0.15 + Redondear(notaProy * 0.20));
+                        suma = (FacesUtils.Redondear(num1 * 0.20) + FacesUtils.Redondear(num2 * 0.20) + FacesUtils.Redondear(num3 * 0.25) + notaAdi * 0.15 + FacesUtils.Redondear(notaProy * 0.20));
                         promedio = suma;
 
                         System.out.println("El estudiante aprovo con un promedio de: "
-                                + Redondear(num1 * 0.20) + " "
-                                + Redondear(num1 * 0.20) + " "
-                                + Redondear(num1 * 0.20) + " "
+                                + FacesUtils.Redondear(num1 * 0.20) + " "
+                                + FacesUtils.Redondear(num1 * 0.20) + " "
+                                + FacesUtils.Redondear(num1 * 0.20) + " "
                                 + notaAdi * 0.15 + " "
-                                + Redondear(notaProy * 0.20) + " R: "
-                                + Redondear(promedio));
+                                + FacesUtils.Redondear(notaProy * 0.20) + " R: "
+                                + FacesUtils.Redondear(promedio));
 //                        notaService.create(nota);
 
                         //vaciarVariables();
@@ -158,18 +181,18 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
                     nota.setNumNotaAdicional(notaAdi);
                     nota.setNumPryecto(notaProy);
 
-                    suma = (Redondear(num1 * 0.20) + Redondear(num2 * 0.20) + Redondear(num3 * 0.25) + notaAdi * 0.15 + Redondear(notaProy * 0.20));
+                    suma = (FacesUtils.Redondear(num1 * 0.20) + FacesUtils.Redondear(num2 * 0.20) + FacesUtils.Redondear(num3 * 0.25) + notaAdi * 0.15 + FacesUtils.Redondear(notaProy * 0.20));
                     promedio = suma;
 
                     System.out.println("El estudiante aprovo con un promedio de: "
-                            + Redondear(num1 * 0.20) + " "
-                            + Redondear(num1 * 0.20) + " "
-                            + Redondear(num1 * 0.20) + " "
+                            + FacesUtils.Redondear(num1 * 0.20) + " "
+                            + FacesUtils.Redondear(num1 * 0.20) + " "
+                            + FacesUtils.Redondear(num1 * 0.20) + " "
                             + notaAdi * 0.15 + " "
-                            + Redondear(notaProy * 0.20) + " R: "
-                            + Redondear(promedio));
+                            + FacesUtils.Redondear(notaProy * 0.20) + " R: "
+                            + FacesUtils.Redondear(promedio));
 
-                    nota.setNumNotaFinal(Redondear(promedio));
+                    nota.setNumNotaFinal(FacesUtils.Redondear(promedio));
                     notaService.edit(nota);
 
                     RequestContext.getCurrentInstance();
@@ -194,8 +217,24 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
         return accion;
     }
 
-    public double Redondear(double numero) {
-        return Math.rint(numero * 100) / 100;
+    public void usuarioSession() {
+        try {
+            if (FacesUtils.getSession().getAttribute("usuario") == null) {
+                System.out.println("No hay registro de usuario");
+                UtilidadesSeguridad.getControlSession("endsession.jsp");
+            } else {
+                usuarioTo = (UsuarioTO) FacesUtils.getSession().getAttribute("usuario");
+                nombre = usuarioTo.getNombre() + " " + usuarioTo.getApellidos();
+            }
+        } catch (IllegalStateException ie) {
+            FacesUtils.controlLog("SEVERE", "Error [IllegalStateException] en la clase ReglasDeNavegacion: " + ie.getMessage());
+            UtilidadesSeguridad.getControlSession("endsession.jsp");
+        } catch (ViewExpiredException e) {
+            FacesUtils.controlLog("SEVERE", "Error [ViewExpiredException] en la clase ReglasDeNavegacion: " + e.getMessage());
+            UtilidadesSeguridad.getControlSession("endsession.jsp");
+        } catch (Exception ex) {
+            FacesUtils.controlLog("SEVERE", "Error [Exception] en la clase ReglasDeNavegacion: " + ex.getMessage());
+        }
     }
 
     public boolean isEdit() {
@@ -292,6 +331,14 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
 
     public void setNotaProy(double notaProy) {
         this.notaProy = notaProy;
+    }
+
+    public AutocompletarUsuario getAutocompletarUsuario() {
+        return autocompletarUsuario;
+    }
+
+    public void setAutocompletarUsuario(AutocompletarUsuario autocompletarUsuario) {
+        this.autocompletarUsuario = autocompletarUsuario;
     }
 
 }

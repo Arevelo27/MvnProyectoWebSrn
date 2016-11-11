@@ -24,7 +24,7 @@ public interface GenericFacade<T, PK extends Serializable> {
 
     void remove(T entity);
 
-    T find(Object id);
+    T findById(final PK id);
 
     List<T> findAll();
 

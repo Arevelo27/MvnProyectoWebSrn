@@ -30,8 +30,8 @@ public abstract class GenericServiceImpl<T, PK extends Serializable> implements 
     }
 
     @Override
-    public T find(Object id) {
-        return getFacade().find(id);
+    public T findById(PK id) {
+        return getFacade().findById(id);
     }
 
     @Override

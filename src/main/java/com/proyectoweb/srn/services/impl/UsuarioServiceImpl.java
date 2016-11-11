@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 @Service(UsuarioServiceImpl.NAME_SERVICE)
-public class UsuarioServiceImpl extends GenericServiceImpl<SrnTblUsuario, String> implements UsuarioService {
+public class UsuarioServiceImpl extends GenericServiceImpl<SrnTblUsuario, Integer> implements UsuarioService {
 
     static final String NAME_SERVICE = "usuarioService";
 
@@ -22,7 +22,7 @@ public class UsuarioServiceImpl extends GenericServiceImpl<SrnTblUsuario, String
     private SrnTblUsuarioFacade usuarioFacade;
 
     @Override
-    public GenericFacade<SrnTblUsuario, String> getFacade() {
+    public GenericFacade<SrnTblUsuario, Integer> getFacade() {
         return usuarioFacade;
     }
 
@@ -35,5 +35,11 @@ public class UsuarioServiceImpl extends GenericServiceImpl<SrnTblUsuario, String
     public List<SrnTblUsuario> findAll() {
         return usuarioFacade.findAll(); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<SrnTblUsuario> findByCriterio(String criterio) {
+        return usuarioFacade.findByCriterio(criterio);
+    }
+
 
 }

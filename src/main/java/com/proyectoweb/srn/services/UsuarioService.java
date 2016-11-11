@@ -6,12 +6,14 @@
 package com.proyectoweb.srn.services;
 
 import com.proyectoweb.srn.modelo.SrnTblUsuario;
+import java.util.List;
 
 /**
  *
  * @author TSI
  */
-public interface UsuarioService extends GenericService<SrnTblUsuario, String> {
+public interface UsuarioService extends GenericService<SrnTblUsuario, Integer> {
 
     Integer findMaxId() throws Exception;
+    List<SrnTblUsuario> findByCriterio(String criterio);
 }

@@ -11,7 +11,7 @@ import com.proyectoweb.srn.modelo.SrnTblUsuario;
  *
  * @author TSI
  */
-public interface LoginService extends GenericService<SrnTblUsuario, String> {
+public interface LoginService extends GenericService<SrnTblUsuario, Integer> {
 
     SrnTblUsuario recuperarClave(String login, String email) throws Exception;
     

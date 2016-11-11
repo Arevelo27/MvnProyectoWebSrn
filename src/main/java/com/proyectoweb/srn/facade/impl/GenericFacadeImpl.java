@@ -16,9 +16,9 @@ import javax.persistence.Query;
  *
  * @author TSI
  * @param <T>
- * @param <E>
+ * @param <PK>
  */
-public abstract class GenericFacadeImpl<T, E extends Serializable> implements GenericFacade<T, E> {
+public abstract class GenericFacadeImpl<T, PK extends Serializable> implements GenericFacade<T, PK> {
 
     private final Class<T> entityClass;
 //    private EntityManager em;
@@ -70,7 +70,7 @@ public abstract class GenericFacadeImpl<T, E extends Serializable> implements Ge
      * @return
      */
     @Override
-    public T find(Object id) {
+    public T findById(PK id) {
         return getEntityManager().find(entityClass, id);
     }
 

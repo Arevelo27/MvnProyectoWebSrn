@@ -6,12 +6,13 @@
 package com.proyectoweb.srn.facade;
 
 import com.proyectoweb.srn.modelo.SrnTblUsuario;
+import java.util.List;
 
 /**
  *
  * @author TSI
  */
-public interface SrnTblUsuarioFacade extends GenericFacade<SrnTblUsuario, String> {
+public interface SrnTblUsuarioFacade extends GenericFacade<SrnTblUsuario, Integer> {
     
     Integer findMaxId() throws Exception;
     
@@ -20,4 +21,6 @@ public interface SrnTblUsuarioFacade extends GenericFacade<SrnTblUsuario, String
     SrnTblUsuario login(String login, String contrasena) throws Exception;
     
     boolean LoginControl(String login, String contrasena) throws Exception;
+    
+    List<SrnTblUsuario> findByCriterio(String criterio);
 }
