@@ -37,4 +37,14 @@ public class NotaServiceImpl extends GenericServiceImpl<SrnTblNota, Integer> imp
         return notaFacade.buscarTodos();
     }
 
+    @Override
+    public List<SrnTblNota> buscarNotasAsignadasUsuario(Integer userDoc, Integer userEst) throws Exception {
+        return notaFacade.buscarNotasAsignadasUsuario(userDoc, userEst);
+    }
+
+    @Override
+    public SrnTblNota findMateriaUser(long codigo) throws Exception {
+        return notaFacade.findMateriaUser(codigo);
+    }
+
 }

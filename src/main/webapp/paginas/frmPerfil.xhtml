@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/tmpInicial.xhtml">
+    <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
+
+    <ui:define name="content">
+        <p:panel id="contenido">
+            <h:form id="frmPerfil">
+                <p:growl id="growl" showDetail="true" life="2800"/>
+                <f:loadBundle basename="com.proyectoweb.srn.utilidades.messages" var="msg"/>
+
+                <h1 style="color: black">#{msg['vista.frmPerfil']}</h1>
+
+                <p:panel header="#{msg['formularioRegistro']}" toggleable="true" rendered="#{perfilBn.form}">
+                    <p:panelGrid id="panelGridUser" columns="3">
+
+                        <h:outputText value="(*) #{msg['frmPerfil.tipoIdentificación']}:" />                  
+                        <p:selectOneMenu id="tipoIdUser"
+                                         value="#{perfilBn.tipoDocumento}" required="true"
+                                         requiredMessage="#{msg['frmPerfil.selecTipoDoc']}">
+                            <f:selectItem itemLabel=" - - Seleccione - -" itemValue="" />
+                            <p:ajax event="change" partialSubmit="true"></p:ajax>
+                            <f:selectItems value="#{selectorTipoDoc.lista}"></f:selectItems>
+                        </p:selectOneMenu>
+                        <p:message for="tipoIdUser"/>
+
+                        <h:outputText value="(*) #{msg['frmPerfil.numeIdentificación']}:" />
+                        <p:inputText id="numIdUser"  value="#{perfilBn.documento}" required="true" requiredMessage="#{msg['campoObligatorio']}" label="Número de identificación: "/>
+                        <p:message for="numIdUser"/>
+
+                        <h:outputText value="(*) #{msg['frmPerfil.nombre']}:" />
+                        <p:inputText id="nomUser"  value="#{perfilBn.nombre}" required="true" requiredMessage="Campo obloigatorio"/>
+                        <p:message for="nomUser"/>
+
+                        <h:outputText value="(*) #{msg['frmPerfil.apellido']}:" />
+                        <p:inputText id="apeUser"  value="#{perfilBn.apellido}" required="true" requiredMessage="Campo obloigatorio"/>
+                        <p:message for="apeUser"/>
+
+                        <h:outputText value="(*) #{msg['frmPerfil.login']}:" />
+                        <p:inputText id="logUser"  value="#{perfilBn.login}" disabled="true" required="true" requiredMessage="Campo obloigatorio"/>
+                        <p:message for="logUser"/>
+
+                        <h:outputLabel value="(*) #{msg['frmPerfil.email']}:" />
+                        <p:inputText id="emailUser" value="#{perfilBn.email}" required="true" requiredMessage="Campo obloigatorio"/>
+                        <p:message for="emailUser" />
+
+                        <h:outputText value="(*) #{msg['frmPerfil.genero']}:" />                    
+                        <p:selectOneMenu id="generoUser"
+                                         value="#{perfilBn.genero}" required="true"
+                                         requiredMessage="Selecciona un genero">
+                            <f:selectItem itemLabel=" - - Seleccione - -" itemValue="" />
+                            <p:ajax event="change" partialSubmit="true"></p:ajax>
+                            <f:selectItems value="#{selectorGenero.lista}"></f:selectItems>
+                        </p:selectOneMenu>
+                        <p:message for="generoUser"/>
+
+                        <h:outputText value="(*) #{msg['frmPerfil.rol']}:" />                    
+                        <p:selectOneMenu id="rolUser"
+                                         value="#{perfilBn.rol}" required="true"
+                                         requiredMessage="Selecciona un rol">
+                            <f:selectItem itemLabel=" - - Seleccione - -" itemValue="" />
+                            <p:ajax event="change" partialSubmit="true"></p:ajax>
+                            <f:selectItems value="#{selectorRol.lista}"></f:selectItems>
+                        </p:selectOneMenu>
+                        <p:message for="rolUser"/>
+
+                        <h:outputText value="(*) #{msg['frmPerfil.estado']}:" />
+                        <p:selectOneMenu id="estadoUser"
+                                         value="#{perfilBn.estado}" required="true"
+                                         requiredMessage="Selecciona un estado">
+                            <f:selectItem itemLabel=" - - Seleccione - -" itemValue="" />
+                            <p:ajax event="change" partialSubmit="true"></p:ajax>
+                            <f:selectItems value="#{selectorEstado.lista}"></f:selectItems>
+                        </p:selectOneMenu>
+                        <p:message for="estadoUser" />
+
+
+                    </p:panelGrid>
+                    <p:panelGrid columns="1" >
+                        <p:commandButton value="Aceptar" process="frmPerfil" update="@all, growl"
+                                         action="#{perfilBn.aceptar()}"></p:commandButton>
+                    </p:panelGrid>
+
+                </p:panel>
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

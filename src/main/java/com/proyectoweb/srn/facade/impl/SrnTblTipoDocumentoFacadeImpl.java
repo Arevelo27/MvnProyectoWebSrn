@@ -42,7 +42,7 @@ public class SrnTblTipoDocumentoFacadeImpl extends GenericFacadeImpl<SrnTblTipoD
                 id = maxId;
             }
         } catch (Exception e) {
-            System.out.println("[TipoDocumentoFacadeImpl] - error metodo findMaxId: " + e.getMessage() + "level: " + Level.SEVERE + " .::. " + e);
+            System.out.println("Clase [SrnTblTipoDocumentoFacadeImpl]: error metodo findMaxId: " + e.getMessage() + "level: " + Level.SEVERE + " .::. " + e);
 //            LogUtil.log("error metodo findMax:" + e.getMessage(), Level.SEVERE, e);
         }
         return id;

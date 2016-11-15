@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template/tmpInicial.xhtml">
+    <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
+
+    <ui:define name="content">
+        <p:panel id="contenido">
+            <h:form id="frmCuenta">
+                <p:growl id="growl" showDetail="true" life="2800"/>
+                <f:loadBundle basename="com.proyectoweb.srn.utilidades.messages" var="msg"/>
+
+                <h1 style="color: black">#{msg['vista.frmCuenta']}</h1>
+
+                <p:panel header="#{msg['formularioRegistro']}" toggleable="true" rendered="#{perfilBn.form}">
+                    <p:panelGrid id="panelGridUser" columns="3">
+
+                        <h:outputLabel for="passwOld" value="(*) #{msg['frmCuenta.passwordOld']}:" />
+                        <p:password id="passwOld" redisplay="true" value="#{cuentaBn.passwordOld}" feedback="true" required="true" requiredMessage="Campo obloigatorio" validatorMessage="Contraseña 1, debe coincidir con: Contraseña 2" label="Contraseña 1"/>
+                        <p:message for="passwOld"/>
+
+                        <h:outputLabel for="passwUser" value="(*) #{msg['frmCuenta.password']}:" />
+                        <p:password id="passwUser" redisplay="true" value="#{cuentaBn.password}" feedback="true" match="passwUser2" required="true" requiredMessage="Campo obloigatorio" validatorMessage="Contraseña 1, debe coincidir con: Contraseña 2" label="Contraseña 1"/>
+                        <p:message for="passwUser"/>
+
+                        <h:outputLabel value="(*) #{msg['frmCuenta.confirPassword']}:" />
+                        <p:password id="passwUser2" redisplay="true" value="#{cuentaBn.password}" feedback="false" required="true" requiredMessage="Campo obloigatorio" label="Contraseña 2" />
+                        <p:message for="passwUser2" />
+
+                    </p:panelGrid>
+                    <p:panelGrid columns="1" >
+                        <p:commandButton value="Aceptar" process="frmCuenta" update="frmCuenta, growl"
+                                         action="#{cuentaBn.aceptar()}"></p:commandButton>
+                    </p:panelGrid>
+
+                </p:panel>
+            </h:form>
+        </p:panel>
+    </ui:define>
+
+</ui:composition>

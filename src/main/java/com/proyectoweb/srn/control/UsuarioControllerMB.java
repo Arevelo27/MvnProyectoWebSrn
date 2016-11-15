@@ -12,6 +12,7 @@ import com.proyectoweb.srn.services.RolService;
 import com.proyectoweb.srn.services.TipoDocService;
 import com.proyectoweb.srn.services.UsuarioService;
 import com.proyectoweb.srn.utilidades.FacesUtils;
+import com.proyectoweb.srn.utilidades.UtilidadesSeguridad;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,20 +138,16 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
         String navegacion = "";
         try {
             if (preAction()) {
-                System.out.println(estadoService.findById(estado).getStrDescripcion());
-                System.out.println(rolService.findById(rol).getStrDescripcion());
-                System.out.println(generoService.findById(genero).getStrDescripcion());
-                System.out.println(tipoDocService.findById(tipoDocumento).getStrDescripcion());
-
                 if (!edit) {
                     id = usuarioService.findMaxId();
-                    if (usuarioService.findById(id) == null) {
+                    if (usuarioService.findDocument(documento) == null) {
                         user.setIdUsuario(id);
-                        user.setCodDocumento(id);
+                        user.setCodDocumento(documento);
                         user.setNombre(nombre);
                         user.setApellido(apellido);
-                        user.setLogin(login);
-                        user.setPassword(password);
+                        user.setLogin(login.trim().toUpperCase());
+                        String password_md5 = UtilidadesSeguridad.getMD5(this.password.trim().toUpperCase());
+                        user.setPassword(password_md5);
                         user.setEmail(email);
                         user.setEstado(estadoService.findById(estado));
                         user.setGenero(generoService.findById(genero));
@@ -158,8 +155,10 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
                         user.setTipoDocumento(tipoDocService.findById(tipoDocumento));
 
                         usuarioService.create(user);
-
+                        
                         mensajeInfo("Registro exitoso");
+                    } else {
+                        mensajeInfo("Este documento que desea registrar ya existe en el sistema");
                     }
                 } else {
                     user.setNombre(nombre);
@@ -205,6 +204,10 @@ public class UsuarioControllerMB implements GenericBean<SrnTblUsuario>, Serializ
             accion = false;
         }
 
+        if (!FacesUtils.validaEmail(email)) {
+            mensajeError("Por favor valide el email");
+            accion = false;
+        }
         return accion;
     }
 

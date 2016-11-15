@@ -15,5 +15,6 @@ import java.util.List;
 public interface UsuarioService extends GenericService<SrnTblUsuario, Integer> {
 
     Integer findMaxId() throws Exception;
+    SrnTblUsuario findDocument(long document) throws Exception;
     List<SrnTblUsuario> findByCriterio(String criterio);
 }

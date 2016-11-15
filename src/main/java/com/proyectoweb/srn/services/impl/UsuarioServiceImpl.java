@@ -41,5 +41,10 @@ public class UsuarioServiceImpl extends GenericServiceImpl<SrnTblUsuario, Intege
         return usuarioFacade.findByCriterio(criterio);
     }
 
+    @Override
+    public SrnTblUsuario findDocument(long document) throws Exception {
+        return usuarioFacade.findDocument(document);
+    }
+
 
 }

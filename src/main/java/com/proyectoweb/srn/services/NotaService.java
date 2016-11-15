@@ -21,4 +21,8 @@ public interface NotaService extends GenericService<SrnTblNota, Integer> {
      * @return @throws Exception
      */
     List<SrnTblNota> buscarTodos() throws Exception;
+
+    List<SrnTblNota> buscarNotasAsignadasUsuario(Integer userDoc, Integer userEst) throws Exception;
+
+    SrnTblNota findMateriaUser(long codigo) throws Exception;
 }

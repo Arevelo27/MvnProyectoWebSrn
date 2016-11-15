@@ -43,7 +43,7 @@ public class SrnTblRolFacadeImpl extends GenericFacadeImpl<SrnTblRol, Integer> i
                 id = maxId;
             }
         } catch (Exception e) {
-            System.out.println("error metodo findMaxId: " + e.getMessage() + "level: " + Level.SEVERE + " .::. " + e);
+            System.out.println("Clase [SrnTblRolFacadeImpl]: error metodo findMaxId: " + e.getMessage() + "level: " + Level.SEVERE + " .::. " + e);
 //            LogUtil.log("error metodo findMax:" + e.getMessage(), Level.SEVERE, e);
         }
         return id;

@@ -32,14 +32,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SrnTblMateria.findAll", query = "SELECT s FROM SrnTblMateria s"),
     @NamedQuery(name = "SrnTblMateria.findByNumIdMateria", query = "SELECT s FROM SrnTblMateria s WHERE s.numIdMateria = :numIdMateria"),
     @NamedQuery(name = "SrnTblMateria.findByStrNombreMateria", query = "SELECT s FROM SrnTblMateria s WHERE s.strNombreMateria = :strNombreMateria"),
-    @NamedQuery(name = "SrnTblMateria.findByNumIntensidadHoraria", query = "SELECT s FROM SrnTblMateria s WHERE s.numIntensidadHoraria = :numIntensidadHoraria")})
+    @NamedQuery(name = "SrnTblMateria.findByNumIntensidadHoraria", query = "SELECT s FROM SrnTblMateria s WHERE s.numIntensidadHoraria = :numIntensidadHoraria"),
+    @NamedQuery(name = "SrnTblMateria.findByCriterio", query = "SELECT s FROM SrnTblMateria s WHERE s.strNombreMateria like :criterio")})
 public class SrnTblMateria implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "NUM_ID_MATERIA")
-    private Long numIdMateria;
+    private Integer numIdMateria;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -53,20 +55,20 @@ public class SrnTblMateria implements Serializable {
     public SrnTblMateria() {
     }
 
-    public SrnTblMateria(Long numIdMateria) {
+    public SrnTblMateria(Integer numIdMateria) {
         this.numIdMateria = numIdMateria;
     }
 
-    public SrnTblMateria(Long numIdMateria, String strNombreMateria) {
+    public SrnTblMateria(Integer numIdMateria, String strNombreMateria) {
         this.numIdMateria = numIdMateria;
         this.strNombreMateria = strNombreMateria;
     }
 
-    public Long getNumIdMateria() {
+    public Integer getNumIdMateria() {
         return numIdMateria;
     }
 
-    public void setNumIdMateria(Long numIdMateria) {
+    public void setNumIdMateria(Integer numIdMateria) {
         this.numIdMateria = numIdMateria;
     }
 
@@ -117,7 +119,7 @@ public class SrnTblMateria implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyectoweb.srn.persistencia.SrnTblMateria[ numIdMateria=" + numIdMateria + " ]";
+        return "[" + numIdMateria + "] "+ strNombreMateria;
     }
-    
+
 }

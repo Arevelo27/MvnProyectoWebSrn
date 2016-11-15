@@ -76,13 +76,16 @@ public class LoginControllerMB implements Serializable {
                     esNull = false;
                     usuario = loginService.login(username, password_md5);
                     usuarioTo.setIdUser(usuario.getIdUsuario());
-                    usuarioTo.setApellidos(usuario.getApellido());
                     usuarioTo.setCodigo(usuario.getCodDocumento() + "");
-                    usuarioTo.setContrasena(password_md5);
-                    usuarioTo.setEstado(usuario.getEstado().getStrCodEstado());
                     usuarioTo.setNombre(usuario.getNombre());
-                    usuarioTo.setRolCodigo(usuario.getCodRol().getStrDescripcion());
+                    usuarioTo.setApellidos(usuario.getApellido());
                     usuarioTo.setLogin(username);
+                    usuarioTo.setContrasena(password_md5);
+                    usuarioTo.setEstado(usuario.getEstado());
+                    usuarioTo.setRolCodigo(usuario.getCodRol());
+                    usuarioTo.setTipoDocumento(usuario.getTipoDocumento());
+                    usuarioTo.setGenero(usuario.getGenero());
+                    usuarioTo.setEmail(usuario.getEmail());
                     
                     FacesUtils.getSession().setAttribute("usuario", usuarioTo);
                     return "frmInicio.xhtml?faces-redirect=true";

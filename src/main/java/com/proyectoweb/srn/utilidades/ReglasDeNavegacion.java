@@ -85,4 +85,12 @@ public class ReglasDeNavegacion implements Serializable {
         return "frmPermisos";
     }
 
+    public String getUrlPerfil() {
+        return "frmPerfil";
+    }
+
+    public String getUrlCuenta() {
+        return "frmCuenta";
+    }
+
 }

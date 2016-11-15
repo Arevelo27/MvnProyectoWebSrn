@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.proyectoweb.srn.facade;
+package com.proyectoweb.srn.services;
 
 import com.proyectoweb.srn.modelo.SrnTblMateriaUsuario;
 
@@ -11,7 +11,7 @@ import com.proyectoweb.srn.modelo.SrnTblMateriaUsuario;
  *
  * @author TSI
  */
-public interface SrnTblMateriaUsuarioFacade extends GenericFacade<SrnTblMateriaUsuario, Integer>{
-    
+public interface MateriaUsuarioService extends GenericService<SrnTblMateriaUsuario, Integer> {
+
     SrnTblMateriaUsuario findMateriaUser(Integer materia, Integer idDoc, Integer idEst) throws Exception;
 }

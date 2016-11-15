@@ -29,12 +29,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SrnTblNota.findAll", query = "SELECT s FROM SrnTblNota s"),
     @NamedQuery(name = "SrnTblNota.findMaxId", query = "SELECT  max(s.numIdNota) FROM SrnTblNota s"),
     @NamedQuery(name = "SrnTblNota.findByNumIdNota", query = "SELECT s FROM SrnTblNota s WHERE s.numIdNota = :numIdNota"),
+    @NamedQuery(name = "SrnTblNota.findByMateriasAsignadas", query = "SELECT s FROM SrnTblNota s WHERE s.numCodMateriauser.numCodDocente.numIdUsuario = :numIdDocente or s.numCodMateriauser.numCodUsuario.numIdUsuario = :numIdUsuario"),
     @NamedQuery(name = "SrnTblNota.findByNumParcialI", query = "SELECT s FROM SrnTblNota s WHERE s.numParcialI = :numParcialI"),
     @NamedQuery(name = "SrnTblNota.findByNumParcialIi", query = "SELECT s FROM SrnTblNota s WHERE s.numParcialIi = :numParcialIi"),
     @NamedQuery(name = "SrnTblNota.findByNumParcialIii", query = "SELECT s FROM SrnTblNota s WHERE s.numParcialIii = :numParcialIii"),
     @NamedQuery(name = "SrnTblNota.findByNumNotaAdicional", query = "SELECT s FROM SrnTblNota s WHERE s.numNotaAdicional = :numNotaAdicional"),
     @NamedQuery(name = "SrnTblNota.findByNumPryecto", query = "SELECT s FROM SrnTblNota s WHERE s.numPryecto = :numPryecto"),
-    @NamedQuery(name = "SrnTblNota.findByNumNotaFinal", query = "SELECT s FROM SrnTblNota s WHERE s.numNotaFinal = :numNotaFinal")})
+    @NamedQuery(name = "SrnTblNota.findByNumNotaFinal", query = "SELECT s FROM SrnTblNota s WHERE s.numNotaFinal = :numNotaFinal"),
+    @NamedQuery(name = "SrnTblNota.findByNotaMateriaUser", query = "SELECT s FROM SrnTblNota s WHERE s.numCodMateriauser.numIdMateriauser = :codMateriaUser")})
 public class SrnTblNota implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

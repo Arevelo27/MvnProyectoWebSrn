@@ -20,7 +20,8 @@ import javax.persistence.Query;
  * @author TSI
  */
 @Stateless
-public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, Integer> implements SrnTblUsuarioFacade{
+public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, Integer> implements SrnTblUsuarioFacade {
+
     @PersistenceContext(unitName = UtilidadesSeguridad.NOMBRE_PERSISTENCIA)
     private EntityManager em;
 
@@ -32,7 +33,7 @@ public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, In
     public SrnTblUsuarioFacadeImpl() {
         super(SrnTblUsuario.class);
     }
-    
+
     /**
      *
      * @param login
@@ -49,7 +50,7 @@ public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, In
             }
             return false;
         } catch (Exception e) {
-            System.out.println("error metodo LoginControl: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
+            System.out.println("Clase [SrnTblUsuarioFacadeImpl]: error metodo LoginControl: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
             return false;
         }
     }
@@ -68,7 +69,7 @@ public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, In
             Query q = em.createNamedQuery("SrnTblUsuario.loginControl", SrnTblUsuario.class).setParameter("username", login).setParameter("password", contrasena);
             usuario = (SrnTblUsuario) q.getSingleResult();
         } catch (Exception e) {
-            System.out.println("error metodo LoginControl: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
+            System.out.println("Clase [SrnTblUsuarioFacadeImpl]: error metodo LoginControl: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
         }
         return usuario;
     }
@@ -80,7 +81,7 @@ public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, In
             Query q = em.createNamedQuery("SrnTblUsuario.findByStrEmail", SrnTblUsuario.class).setParameter("username", login).setParameter("email", email);
             usuario = (SrnTblUsuario) q.getSingleResult();
         } catch (Exception e) {
-            System.out.println("error metodo recuperarClave: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
+            System.out.println("Clase [SrnTblUsuarioFacadeImpl]: error metodo recuperarClave: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
         }
         return usuario;
     }
@@ -95,7 +96,7 @@ public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, In
                 id = maxId;
             }
         } catch (Exception e) {
-            System.out.println("[SrnTblUsuarioFacadeImpl] - error metodo findMaxId: " + e.getMessage() + "level: " + Level.SEVERE + " .::. " + e);
+            System.out.println("Clase [SrnTblUsuarioFacadeImpl]: error metodo findMaxId: " + e.getMessage() + "level: " + Level.SEVERE + " .::. " + e);
 //            LogUtil.log("error metodo findMax:" + e.getMessage(), Level.SEVERE, e);
         }
         return id;
@@ -105,12 +106,24 @@ public class SrnTblUsuarioFacadeImpl extends GenericFacadeImpl<SrnTblUsuario, In
     public List<SrnTblUsuario> findByCriterio(String criterio) {
         List<SrnTblUsuario> list = null;
         try {
-            list = em.createNamedQuery("SrnTblUsuario.findByCriterio").setParameter("rol", 3).setParameter("criterio", "%" + criterio.trim() + "%").getResultList();
+            list = em.createNamedQuery("SrnTblUsuario.findByCriterio").setParameter("criterio", "%" + criterio.trim() + "%").setParameter("rol", 3).getResultList();
         } catch (Exception e) {
-            System.out.println("error metodo findAll: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
+            System.out.println("Clase [SrnTblUsuarioFacadeImpl]: error metodo findByCriterio: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
 //            LogUtil.log("error metodo findAll:" + egetMessage(), Level.SEVERE, e);
         }
         return list;
+    }
+
+    @Override
+    public SrnTblUsuario findDocument(long document) throws Exception {
+        SrnTblUsuario usuario = null;
+        try {
+            Query q = em.createNamedQuery("SrnTblUsuario.findByNumCodDocumento", SrnTblUsuario.class).setParameter("numCodDocumento", document);
+            usuario = (SrnTblUsuario) q.getSingleResult();
+        } catch (Exception e) {
+            System.out.println("Clase [SrnTblUsuarioFacadeImpl]: error metodo findDocument: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
+        }
+        return usuario;
     }
 
 }

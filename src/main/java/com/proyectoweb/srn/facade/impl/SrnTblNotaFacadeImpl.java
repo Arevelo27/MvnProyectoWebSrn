@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -42,7 +43,7 @@ public class SrnTblNotaFacadeImpl extends GenericFacadeImpl<SrnTblNota, Integer>
                 id = maxId;
             }
         } catch (Exception e) {
-            System.out.println("error metodo findMaxId: " + e.getMessage() + "level: " + Level.SEVERE + " .::. " + e);
+            System.out.println("Clase [SrnTblNotaFacadeImpl]: error metodo findMaxId: " + e.getMessage() + "level: " + Level.SEVERE + " .::. " + e);
         }
         return id;
     }
@@ -51,5 +52,27 @@ public class SrnTblNotaFacadeImpl extends GenericFacadeImpl<SrnTblNota, Integer>
     public List<SrnTblNota> buscarTodos() throws Exception {
         return findAll();
     }
+
+    @Override
+    public List<SrnTblNota> buscarNotasAsignadasUsuario(Integer userDoc, Integer userEst) throws Exception {
+        List<SrnTblNota> list = null;
+        try {
+            list = em.createNamedQuery("SrnTblNota.findByMateriasAsignadas").setParameter("numIdUsuario", userEst).setParameter("numIdDocente", userDoc).getResultList();
+        } catch (Exception e) {
+            System.out.println("Clase [SrnTblNotaFacadeImpl]: error metodo findAll: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
+        }
+        return list;
+    }
     
+    @Override
+    public SrnTblNota findMateriaUser(long codigo) throws Exception {
+        SrnTblNota usuario = null;
+        try {
+            Query q = em.createNamedQuery("SrnTblNota.findByNotaMateriaUser", SrnTblNota.class).setParameter("codMateriaUser", codigo);
+            usuario = (SrnTblNota) q.getSingleResult();
+        } catch (Exception e) {
+            System.out.println("Clase [SrnTblNotaFacadeImpl]: error metodo findMateriaUser: " + e.getMessage() + " level: " + Level.SEVERE + " .::. " + e);
+        }
+        return usuario;
+    }
 }

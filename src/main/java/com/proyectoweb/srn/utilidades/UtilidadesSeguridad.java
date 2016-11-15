@@ -19,6 +19,12 @@ public class UtilidadesSeguridad {
      *configName_persistence: nombre de configuración de la persistencia
      */
     public static final String NOMBRE_PERSISTENCIA = "WebSrnPU";
+    
+    public static final String EMAIL_PATTERN =
+            //NOMBRE.OPCIONAL@
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    //DOMINIO.COM/NET.OPCIONAL(CO)
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     /**
      * * Clase con mÃ©todos estÃ¡ticos de cifrado *

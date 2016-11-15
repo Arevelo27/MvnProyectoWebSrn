@@ -38,7 +38,7 @@
                     <p:message for="tipoIdUser"/>
 
                     <h:outputText value="(*) #{msg['frmUsuario.numeIdentificación']}:" />
-                    <p:inputText id="numIdUser"  value="#{usuarioBn.documento}" required="true" requiredMessage="#{msg['campoObligatorio']}"/>
+                    <p:inputText id="numIdUser"  value="#{usuarioBn.documento}" required="true" requiredMessage="#{msg['campoObligatorio']}" label="Número de identificación: "/>
                     <p:message for="numIdUser"/>
 
                     <h:outputText value="(*) #{msg['frmUsuario.nombre']}:" />
@@ -48,6 +48,22 @@
                     <h:outputText value="(*) #{msg['frmUsuario.apellido']}:" />
                     <p:inputText id="apeUser"  value="#{usuarioBn.apellido}" required="true" requiredMessage="Campo obloigatorio"/>
                     <p:message for="apeUser"/>
+
+                    <h:outputText value="(*) #{msg['frmUsuario.login']}:" />
+                    <p:inputText id="logUser"  value="#{usuarioBn.login}" required="true" requiredMessage="Campo obloigatorio"/>
+                    <p:message for="logUser"/>
+
+                    <h:outputLabel for="passwUser" value="(*) #{msg['frmUsuario.password']}:" />
+                    <p:password id="passwUser" redisplay="true" value="#{usuarioBn.password}" feedback="true" match="passwUser2" required="true" requiredMessage="Campo obloigatorio" validatorMessage="Contraseña 1, debe coincidir con: Contraseña 2" label="Contraseña 1"/>
+                    <p:message for="passwUser"/>
+
+                    <h:outputLabel value="(*) #{msg['frmUsuario.confirPassword']}:" />
+                    <p:password id="passwUser2" redisplay="true" value="#{usuarioBn.password}" feedback="false" required="true" requiredMessage="Campo obloigatorio" label="Contraseña 2" />
+                    <p:message for="passwUser2" />
+
+                    <h:outputLabel value="(*) #{msg['frmUsuario.email']}:" />
+                    <p:inputText id="emailUser" value="#{usuarioBn.email}" required="true" requiredMessage="Campo obloigatorio"/>
+                    <p:message for="emailUser" />
 
                     <h:outputText value="(*) #{msg['frmUsuario.genero']}:" />                    
                     <p:selectOneMenu id="generoUser"

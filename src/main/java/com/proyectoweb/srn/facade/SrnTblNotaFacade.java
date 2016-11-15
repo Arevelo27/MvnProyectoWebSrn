@@ -17,4 +17,8 @@ public interface SrnTblNotaFacade extends GenericFacade<SrnTblNota, Integer>{
     Integer findMaxId() throws Exception;
     
     List<SrnTblNota> buscarTodos() throws Exception;
+    
+    List<SrnTblNota> buscarNotasAsignadasUsuario(Integer userDoc, Integer userEst) throws Exception;
+    
+    SrnTblNota findMateriaUser(long document) throws Exception;
 }

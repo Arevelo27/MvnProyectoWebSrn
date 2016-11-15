@@ -29,10 +29,25 @@
                 <p:panel header="#{msg['formularioRegistro']}" toggleable="true" rendered="#{notaActualBn.form}" >
                     <p:panelGrid columns="3"  >
 
-                        <h:outputText value="Materia prima" />
-                        <p:autoComplete size="100" 
+                        <h:outputText value="Materia: " />
+                        <p:autoComplete size="20" 
                                         dropdown="true"
-                                        id="buscadorMateriaPrima" var="it" itemLabel="#{it}"
+                                        id="buscadorMateria" var="it" itemLabel="#{it}"
+                                        itemValue="#{it}"
+                                        converter="#{notaActualBn.autocompletarMateria.conversorItems}"
+                                        value="#{notaActualBn.autocompletarMateria.seleccionado}"
+                                        completeMethod="#{notaActualBn.autocompletarMateria.completarBusqueda}">
+                            <p:ajax event="itemSelect" update="@all" process="@this"
+                                    listener="#{notaActualBn.autocompletarMateria.seleccionar}">
+
+                            </p:ajax>
+                        </p:autoComplete>
+                        <p:message for="buscadorMateria"></p:message>
+                        
+                        <h:outputText value="Estudiante: " />
+                        <p:autoComplete size="20" 
+                                        dropdown="true"
+                                        id="buscadorUsuario" var="it" itemLabel="#{it}"
                                         itemValue="#{it}"
                                         converter="#{notaActualBn.autocompletarUsuario.conversorItems}"
                                         value="#{notaActualBn.autocompletarUsuario.seleccionado}"
@@ -42,34 +57,34 @@
 
                             </p:ajax>
                         </p:autoComplete>
-                        <p:message for="buscadorMateriaPrima"></p:message>
+                        <p:message for="buscadorUsuario"></p:message>
 
                         <h:outputText value="#{msg['frmNotasAct.p1']}:"/>
-                        <p:inputText id="descRol1" value="#{notaActualBn.num1}" validatorMessage="No se permite esta nota" converter="#{Float}" converterMessage="No es un formaro correcto" required="true" requiredMessage="Campo requerido">
+                        <p:inputText id="descRol1" value="#{notaActualBn.num1}" validatorMessage="No se permite esta nota" converter="#{Float}" converterMessage="No es un formaro correcto" required="true" requiredMessage="Campo requerido" style="text-align: right;">
                             <f:convertNumber maxIntegerDigits="1" maxFractionDigits="2" />
                             <f:validateDoubleRange minimum="0.0" maximum="5.0" />
                         </p:inputText>
                         <p:message for="descRol1"/>
                         <h:outputText value="#{msg['frmNotasAct.p2']}:"/>
-                        <p:inputText id="descRol2" value="#{notaActualBn.num2}"  validatorMessage="No se permite esta nota" converter="#{Float}" converterMessage="No es un formaro correcto" required="true" requiredMessage="Campo requerido">
+                        <p:inputText id="descRol2" value="#{notaActualBn.num2}"  validatorMessage="No se permite esta nota" converter="#{Float}" converterMessage="No es un formaro correcto" required="true" requiredMessage="Campo requerido" style="text-align: right;">
                             <f:convertNumber maxIntegerDigits="1" maxFractionDigits="2" />
                             <f:validateDoubleRange minimum="0.0" maximum="5.0" />
                         </p:inputText>
                         <p:message for="descRol2"/>
                         <h:outputText value="#{msg['frmNotasAct.p3']}:"/>
-                        <p:inputText id="descRol3" value="#{notaActualBn.num3}" validatorMessage="No se permite esta nota" converter="#{Float}" converterMessage="No es un formaro correcto" required="true" requiredMessage="Campo requerido">
+                        <p:inputText id="descRol3" value="#{notaActualBn.num3}" validatorMessage="No se permite esta nota" converter="#{Float}" converterMessage="No es un formaro correcto" required="true" requiredMessage="Campo requerido" style="text-align: right;">
                             <f:convertNumber maxIntegerDigits="1" maxFractionDigits="2" />
                             <f:validateDoubleRange minimum="0.0" maximum="5.0" />
                         </p:inputText>
                         <p:message for="descRol3"/>
                         <h:outputText value="#{msg['frmNotasAct.pA']}:"/>
-                        <p:inputText id="adiRol" value="#{notaActualBn.notaAdi}" validatorMessage="No se permite esta nota" converter="#{Float}" converterMessage="No es un formaro correcto" required="true" requiredMessage="Campo requerido">
+                        <p:inputText id="adiRol" value="#{notaActualBn.notaAdi}" validatorMessage="No se permite esta nota" converter="#{Float}" converterMessage="No es un formaro correcto" required="true" requiredMessage="Campo requerido" style="text-align: right;">
                             <f:convertNumber maxIntegerDigits="1" maxFractionDigits="2" />
                             <f:validateDoubleRange minimum="0.0" maximum="5.0" />
                         </p:inputText>
                         <p:message for="adiRol"/>
                         <h:outputText value="#{msg['frmNotasAct.pY']}:"/>
-                        <p:inputText id="proyRol" value="#{notaActualBn.notaProy}" validatorMessage="No se permite esta nota" converter="#{Float}" converterMessage="No es un formaro correcto" required="true" requiredMessage="Campo requerido">
+                        <p:inputText id="proyRol" value="#{notaActualBn.notaProy}" validatorMessage="No se permite esta nota" converter="#{Float}" converterMessage="No es un formaro correcto" required="true" requiredMessage="Campo requerido" style="text-align: right;">
                             <f:convertNumber maxIntegerDigits="1" maxFractionDigits="2" />
                             <f:validateDoubleRange minimum="0.0" maximum="5.0" />
                         </p:inputText>

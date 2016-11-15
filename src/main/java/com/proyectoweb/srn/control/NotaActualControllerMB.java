@@ -5,8 +5,12 @@
  */
 package com.proyectoweb.srn.control;
 
+import com.proyectoweb.srn.componentes.autocomplete.AutocompletarMateria;
 import com.proyectoweb.srn.componentes.autocomplete.AutocompletarUsuario;
+import com.proyectoweb.srn.modelo.SrnTblMateriaUsuario;
 import com.proyectoweb.srn.modelo.SrnTblNota;
+import com.proyectoweb.srn.services.MateriaService;
+import com.proyectoweb.srn.services.MateriaUsuarioService;
 import com.proyectoweb.srn.services.NotaService;
 import com.proyectoweb.srn.services.UsuarioService;
 import com.proyectoweb.srn.to.UsuarioTO;
@@ -38,8 +42,13 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
     private NotaService notaService;
     @Inject
     private UsuarioService usuarioService;
+    @Inject
+    private MateriaService materiaService;
+    @Inject
+    private MateriaUsuarioService materiaUsuarioService;
 
     private UsuarioTO usuarioTo;
+    private SrnTblMateriaUsuario materiaUsuario;
     private String nombre;
 
     private boolean edit = false;
@@ -50,6 +59,7 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
     private List<SrnTblNota> listNota;
 
     private AutocompletarUsuario autocompletarUsuario;
+    private AutocompletarMateria autocompletarMateria;
 
     /**
      *
@@ -59,19 +69,10 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
     public void init() {
         try {
             listNota = new ArrayList<SrnTblNota>();
-            buscarTodos();
             usuarioSession();
+            buscarTodos();
+            autocompletar();
 
-            autocompletarUsuario = new AutocompletarUsuario() {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public UsuarioService usuarioService() {
-                    return usuarioService;
-                }
-            };
-            
         } catch (Exception e) {
             FacesUtils.controlLog("SEVERE", "Error en la clase LoginControllerMB del metodo init: " + e.getMessage());
         }
@@ -83,12 +84,48 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
      */
     @Override
     public void buscarTodos() throws Exception {
-        listNota = notaService.buscarTodos();
+        String rol = usuarioTo.getRolCodigo().getStrDescripcion();
+        switch (rol) {
+            case "ADMINISTRADOR":
+                listNota = notaService.buscarTodos();
+                break;
+            case "DOCENTE":
+                listNota = notaService.buscarNotasAsignadasUsuario(usuarioTo.getIdUser(), 0);
+                break;
+            case "ESTUDIANTE":
+                listNota = notaService.buscarNotasAsignadasUsuario(0, usuarioTo.getIdUser());
+                break;
+        }
+    }
+
+    public void autocompletar() {
+
+        autocompletarUsuario = new AutocompletarUsuario() {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public UsuarioService usuarioService() {
+                return usuarioService;
+            }
+        };
+
+        autocompletarMateria = new AutocompletarMateria() {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public MateriaService materiaService() {
+                return materiaService;
+            }
+        };
+
     }
 
     @Override
     public void verForm() {
         nota = new SrnTblNota();
+        materiaUsuario = new SrnTblMateriaUsuario();
         id = 0;
         desc = "";
         num1 = 0.0;
@@ -97,6 +134,8 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
         notaAdi = 0.0;
         notaProy = 0.0;
         promedio = 0.0;
+        autocompletarMateria.setSeleccionado(null);
+        autocompletarUsuario.setSeleccionado(null);
         form = true;
         edit = false;
     }
@@ -126,6 +165,7 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
         notaProy = FacesUtils.Redondear(r.getNumPryecto());
         promedio = r.getNumNotaFinal();
         autocompletarUsuario.setSeleccionado(nota.getNumCodMateriauser().getNumCodUsuario());
+        autocompletarMateria.setSeleccionado(nota.getNumCodMateriauser().getNumCodMateria());
         form = true;
         edit = true;
         //multiplica por 50 y divide por 10
@@ -167,11 +207,17 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
                                 + notaAdi * 0.15 + " "
                                 + FacesUtils.Redondear(notaProy * 0.20) + " R: "
                                 + FacesUtils.Redondear(promedio));
-//                        notaService.create(nota);
 
-                        //vaciarVariables();
-                        RequestContext.getCurrentInstance();
-                        FacesUtils.addInfoMessage("Registro exitoso");
+                        materiaUsuario = materiaUsuarioService.findMateriaUser(autocompletarMateria.getSeleccionado().getNumIdMateria(), usuarioTo.getIdUser(), autocompletarUsuario.getSeleccionado().getIdUsuario());
+                        nota.setNumNotaFinal(FacesUtils.Redondear(promedio));
+
+                        if (notaService.findMateriaUser(materiaUsuario.getNumIdMateriauser()) != null) {
+                            FacesUtils.addErrorMessage("El estudiante ya tiene notas creadas");
+                        } else {
+                            nota.setNumCodMateriauser(materiaUsuario);
+                            notaService.create(nota);
+                            FacesUtils.addInfoMessage("Registro exitoso");
+                        }
 //                    }
                     }
                 } else {
@@ -214,6 +260,24 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
     @Override
     public boolean preAction() {
         boolean accion = true;
+        try {
+            if (autocompletarMateria.getSeleccionado() == null) {
+                mensajeError("Por favor seleccione una materia");
+                accion = false;
+            }
+            if (autocompletarUsuario.getSeleccionado() == null) {
+                mensajeError("Por favor seleccione un estudiante");
+                accion = false;
+            }
+            if (autocompletarMateria.getSeleccionado() != null && autocompletarUsuario.getSeleccionado() != null) {
+                if (materiaUsuarioService.findMateriaUser(autocompletarMateria.getSeleccionado().getNumIdMateria(), usuarioTo.getIdUser(), autocompletarUsuario.getSeleccionado().getIdUsuario()) == null) {
+                    mensajeError("Por favor valide si el usuario tiene asignado materias");
+                    accion = false;
+                }
+            }
+        } catch (Exception e) {
+            FacesUtils.controlLog("SEVERE", "Error [preAction] en la clase NotaActualControllerMB: " + e.getMessage());
+        }
         return accion;
     }
 
@@ -227,14 +291,24 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
                 nombre = usuarioTo.getNombre() + " " + usuarioTo.getApellidos();
             }
         } catch (IllegalStateException ie) {
-            FacesUtils.controlLog("SEVERE", "Error [IllegalStateException] en la clase ReglasDeNavegacion: " + ie.getMessage());
+            FacesUtils.controlLog("SEVERE", "Error [IllegalStateException] en la clase NotaActualControllerMB: " + ie.getMessage());
             UtilidadesSeguridad.getControlSession("endsession.jsp");
         } catch (ViewExpiredException e) {
-            FacesUtils.controlLog("SEVERE", "Error [ViewExpiredException] en la clase ReglasDeNavegacion: " + e.getMessage());
+            FacesUtils.controlLog("SEVERE", "Error [ViewExpiredException] en la clase NotaActualControllerMB: " + e.getMessage());
             UtilidadesSeguridad.getControlSession("endsession.jsp");
         } catch (Exception ex) {
             FacesUtils.controlLog("SEVERE", "Error [Exception] en la clase ReglasDeNavegacion: " + ex.getMessage());
         }
+    }
+
+    public void mensajeError(String cadena) {
+        RequestContext.getCurrentInstance().update("growl");
+        FacesUtils.addErrorMessage(cadena);
+    }
+
+    public void mensajeInfo(String cadena) {
+        RequestContext.getCurrentInstance().update("growl");
+        FacesUtils.addInfoMessage(cadena);
     }
 
     public boolean isEdit() {
@@ -339,6 +413,14 @@ public class NotaActualControllerMB implements GenericBean<SrnTblNota>, Serializ
 
     public void setAutocompletarUsuario(AutocompletarUsuario autocompletarUsuario) {
         this.autocompletarUsuario = autocompletarUsuario;
+    }
+
+    public AutocompletarMateria getAutocompletarMateria() {
+        return autocompletarMateria;
+    }
+
+    public void setAutocompletarMateria(AutocompletarMateria autocompletarMateria) {
+        this.autocompletarMateria = autocompletarMateria;
     }
 
 }

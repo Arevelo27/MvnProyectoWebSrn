@@ -28,11 +28,16 @@ import javax.faces.model.SelectItem;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  *
  * @author andresrevelo
  */
 public class FacesUtils {
+
+    private static Pattern pattern;
+    private static Matcher matcher;
 
     public static ServletContext getServletContext() {
         return (ServletContext) getCurrentInstance().getExternalContext().getContext();
@@ -266,35 +271,41 @@ public class FacesUtils {
     }
 
     public static void controlLog(String level, Object ex) {
-        switch(level){
-            case "ALL": 
+        switch (level) {
+            case "ALL":
                 Logger.getLogger(FacesUtils.class.getName()).log(Level.ALL, null, ex);
                 break;
-            case "CONFIG": 
+            case "CONFIG":
                 Logger.getLogger(FacesUtils.class.getName()).log(Level.CONFIG, null, ex);
                 break;
-            case "FINE": 
+            case "FINE":
                 Logger.getLogger(FacesUtils.class.getName()).log(Level.FINE, null, ex);
                 break;
-            case "FINEST": 
+            case "FINEST":
                 Logger.getLogger(FacesUtils.class.getName()).log(Level.FINEST, null, ex);
                 break;
-            case "INFO": 
+            case "INFO":
                 Logger.getLogger(FacesUtils.class.getName()).log(Level.INFO, null, ex);
                 break;
-            case "OFF": 
+            case "OFF":
                 Logger.getLogger(FacesUtils.class.getName()).log(Level.OFF, null, ex);
                 break;
-            case "SEVERE": 
+            case "SEVERE":
                 Logger.getLogger(FacesUtils.class.getName()).log(Level.SEVERE, null, ex);
                 break;
-            case "WARNING": 
+            case "WARNING":
                 Logger.getLogger(FacesUtils.class.getName()).log(Level.WARNING, null, ex);
                 break;
         }
     }
-    
+
     public static double Redondear(double numero) {
         return Math.rint(numero * 100) / 100;
+    }
+
+    public static boolean validaEmail(String email) {
+        pattern = Pattern.compile(UtilidadesSeguridad.EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 }
